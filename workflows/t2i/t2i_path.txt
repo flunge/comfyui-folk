@@ -3,6 +3,7 @@ root dir: /workspace/group_share/adc-sim/users/lik44/models/t2i_models
 .:
 flux
 kolors
+qwen
 sd35
 t2i.txt
 text_encoders
@@ -68,6 +69,26 @@ diffusion_pytorch_model.bin
 diffusion_pytorch_model.safetensors
 sdxl.vae.safetensors
 sdxl_vae.safetensors
+
+./qwen:
+diffusion_models
+loras
+text_encoders
+vae
+
+./qwen/diffusion_models:
+qwen_image_2512_fp8_e4m3fn.safetensors
+qwen_image_edit_2511_bf16.safetensors
+
+./qwen/loras:
+Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors
+Qwen-Image-Lightning-4steps-V1.0.safetensors
+
+./qwen/text_encoders:
+qwen_2.5_vl_7b_fp8_scaled.safetensors
+
+./qwen/vae:
+qwen_image_vae.safetensors
 
 ./sd35:
 controlnet
