@@ -20,7 +20,7 @@ except ImportError:
 
 MS = "https://www.modelscope.cn/models/black-forest-labs/FLUX.1-dev/resolve/master"
 TE = "https://www.modelscope.cn/models/AI-ModelScope/flux_text_encoders/resolve/master"
-DIR = "/workspace/lik44@xiaopeng.com/test_deepcode/third_party/ComfyUI/models"
+DIR = "/workspace/group_share/adc-sim/users/lik44/models"
 shutdown = False
 
 
