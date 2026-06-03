@@ -86,7 +86,15 @@ def load_safetensors(ckpt):
     import comfy_aimdo.model_mmap
 
     file_lock = threading.Lock()
-    model_mmap = comfy_aimdo.model_mmap.ModelMMAP(ckpt)
+    try:
+        model_mmap = comfy_aimdo.model_mmap.ModelMMAP(ckpt)
+    except (RuntimeError, Exception) as _e:
+        # ModelMMAP 在某些文件系统上会失败（如共享/NFS），回退标准加载
+        import safetensors
+        with safetensors.safe_open(ckpt, framework="pt", device="cpu") as f:
+            sd = {k: f.get_tensor(k).clone() for k in f.keys()}
+            metadata = f.metadata() if hasattr(f, 'metadata') else None
+            return sd, metadata
     f = model_mmap.get_file_handle()
     file_size = os.path.getsize(ckpt)
     mv = memoryview((ctypes.c_uint8 * file_size).from_address(model_mmap.get()))
