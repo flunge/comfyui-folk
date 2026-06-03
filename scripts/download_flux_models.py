@@ -19,6 +19,7 @@ except ImportError:
     print("请先安装依赖: pip install requests tqdm"); sys.exit(1)
 
 MS = "https://www.modelscope.cn/models/black-forest-labs/FLUX.1-dev/resolve/master"
+TE = "https://www.modelscope.cn/models/AI-ModelScope/flux_text_encoders/resolve/master"
 DIR = "/workspace/lik44@xiaopeng.com/test_deepcode/third_party/ComfyUI/models"
 shutdown = False
 
@@ -36,12 +37,12 @@ signal.signal(signal.SIGTERM, handler)
 MODELS = {
     "fp16":   {"file": "flux1-dev-fp16.safetensors", "url": f"{MS}/flux1-dev.safetensors",        "dir": "diffusion_models"},
     "ae":     {"file": "ae.safetensors",              "url": f"{MS}/ae.safetensors",               "dir": "vae"},
-    "clip_l": {"file": "clip_l.safetensors",          "url": f"{MS}/text_encoder/model.safetensors","dir": "text_encoders"},
-    "t5xxl":  {"file": "t5xxl_fp16.safetensors",      "url": f"{MS}/text_encoder_2/model.safetensors","dir": "text_encoders"},
-    "vision": {"file": "clip_vision_h.safetensors",   "url": f"{MS}/clip_vision/clip_vision_h.safetensors","dir": "clip_vision"},
+    "clip_l": {"file": "clip_l.safetensors",          "url": f"{TE}/clip_l.safetensors",           "dir": "text_encoders"},
+    "t5xxl":  {"file": "t5xxl_fp16.safetensors",      "url": f"{TE}/t5xxl_fp16.safetensors",       "dir": "text_encoders"},
+    "t5fp8":  {"file": "t5xxl_fp8_e4m3fn.safetensors","url": f"{TE}/t5xxl_fp8_e4m3fn.safetensors","dir": "text_encoders"},
 }
 
-CATS = {"all":["fp16","ae","clip_l","t5xxl","vision"],"fp16":["fp16"],"vae":["ae"],"ae":["ae"],"clip":["clip_l","t5xxl"],"vision":["vision"]}
+CATS = {"all":["fp16","ae","clip_l","t5fp8"],"fp16":["fp16"],"vae":["ae"],"ae":["ae"],"clip":["clip_l","t5fp8"],"t5":["t5fp8"]}
 
 
 def fmt(b):
