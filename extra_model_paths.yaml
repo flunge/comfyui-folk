@@ -14,6 +14,7 @@ t2i_models:
     controlnet: |
       flux/controlnet/
       sd35/controlnet/
+    clip_vision: clip_vision/
     text_encoders: |
       text_encoders/
       qwen/text_encoders/
