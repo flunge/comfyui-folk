@@ -1,7 +1,7 @@
 {
-  "last_node_id": 265,
+  "last_node_id": 267,
   "last_link_id": 376,
-  "id": "qwen-t2i-asset-2k-expanded",
+  "id": "qwen-t2i-asset-batch-2k",
   "revision": 0,
   "nodes": [
     {
@@ -183,7 +183,7 @@
           "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 367
+          "link": 320
         },
         {
           "localized_name": "shift",
@@ -267,8 +267,7 @@
           "type": "MODEL",
           "slot_index": 0,
           "links": [
-            312,
-            324
+            320
           ]
         }
       ],
@@ -367,7 +366,7 @@
         "secondTabWidth": 65
       },
       "widgets_values": [
-        "masterpiece, highly detailed, sharp focus, detailed face, detailed eyes, fine skin texture, individual hair strands, detailed fabric folds, embroidery details, clean edge definition, studio portrait, soft but crisp lighting, white seamless background. Use this for character_asset / prop_asset / scene_asset generation."
+        "masterpiece, highly detailed, sharp focus, clean edge definition, high fidelity materials, consistent asset sheet rendering. Use this workflow for batch asset generation. Keep composition stable and readable."
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -433,7 +432,7 @@
         "secondTabWidth": 65
       },
       "widgets_values": [
-        "low resolution, low quality, deformed limbs, deformed fingers, over-saturated, waxy skin, no facial detail, over-smoothed, obvious AI artifacts, messy composition, blurry text, distorted geometry"
+        "low resolution, low quality, deformed anatomy, extra limbs, extra fingers, distorted geometry, over-saturated, waxy skin, blurry details, messy composition, inconsistent identity, inconsistent costume, text, watermark"
       ],
       "color": "#322",
       "bgcolor": "#533"
@@ -628,7 +627,7 @@
           "widget": {
             "name": "steps"
           },
-          "link": 368
+          "link": null
         },
         {
           "localized_name": "cfg",
@@ -637,7 +636,7 @@
           "widget": {
             "name": "cfg"
           },
-          "link": 369
+          "link": null
         },
         {
           "localized_name": "sampler_name",
@@ -696,589 +695,13 @@
         "secondTabWidth": 65
       },
       "widgets_values": [
-        464857551335368,
+        0,
         "randomize",
-        50,
+        40,
         4,
         "euler",
         "simple",
         1
-      ]
-    },
-    {
-      "id": 254,
-      "type": "PrimitiveInt",
-      "pos": [
-        300,
-        1150
-      ],
-      "size": [
-        230,
-        110
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "value",
-          "name": "value",
-          "type": "INT",
-          "widget": {
-            "name": "value"
-          },
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "INT",
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            355
-          ]
-        }
-      ],
-      "title": "Int (Steps)",
-      "properties": {
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.7",
-          "input_ue_unconnectable": {}
-        },
-        "cnr_id": "comfy-core",
-        "ver": "0.12.3",
-        "Node name for S&R": "PrimitiveInt",
-        "enableTabs": false,
-        "tabWidth": 65,
-        "tabXOffset": 10,
-        "hasSecondTab": false,
-        "secondTabText": "Send Back",
-        "secondTabOffset": 80,
-        "secondTabWidth": 65
-      },
-      "widgets_values": [
-        50,
-        "fixed"
-      ]
-    },
-    {
-      "id": 255,
-      "type": "PrimitiveFloat",
-      "pos": [
-        300,
-        1290
-      ],
-      "size": [
-        230,
-        110
-      ],
-      "flags": {},
-      "order": 1,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "value",
-          "name": "value",
-          "type": "FLOAT",
-          "widget": {
-            "name": "value"
-          },
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "FLOAT",
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "links": [
-            357
-          ]
-        }
-      ],
-      "title": "Float (CFG)",
-      "properties": {
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.7",
-          "input_ue_unconnectable": {}
-        },
-        "cnr_id": "comfy-core",
-        "ver": "0.12.3",
-        "Node name for S&R": "PrimitiveFloat",
-        "enableTabs": false,
-        "tabWidth": 65,
-        "tabXOffset": 10,
-        "hasSecondTab": false,
-        "secondTabText": "Send Back",
-        "secondTabOffset": 80,
-        "secondTabWidth": 65
-      },
-      "widgets_values": [
-        4
-      ]
-    },
-    {
-      "id": 256,
-      "type": "PrimitiveBoolean",
-      "pos": [
-        300,
-        2060
-      ],
-      "size": [
-        230,
-        100
-      ],
-      "flags": {},
-      "order": 13,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "value",
-          "name": "value",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "value"
-          },
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "BOOLEAN",
-          "name": "BOOLEAN",
-          "type": "BOOLEAN",
-          "links": [
-            326,
-            358,
-            359
-          ]
-        }
-      ],
-      "title": "Enable 4 Steps LoRA?",
-      "properties": {
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.7",
-          "input_ue_unconnectable": {}
-        },
-        "cnr_id": "comfy-core",
-        "ver": "0.12.3",
-        "Node name for S&R": "PrimitiveBoolean",
-        "enableTabs": false,
-        "tabWidth": 65,
-        "tabXOffset": 10,
-        "hasSecondTab": false,
-        "secondTabText": "Send Back",
-        "secondTabOffset": 80,
-        "secondTabWidth": 65
-      },
-      "widgets_values": [
-        false
-      ]
-    },
-    {
-      "id": 257,
-      "type": "PrimitiveInt",
-      "pos": [
-        290,
-        1540
-      ],
-      "size": [
-        230,
-        110
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "value",
-          "name": "value",
-          "type": "INT",
-          "widget": {
-            "name": "value"
-          },
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "INT",
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            347,
-            354
-          ]
-        }
-      ],
-      "title": "Int (Steps)",
-      "properties": {
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.7",
-          "input_ue_unconnectable": {}
-        },
-        "cnr_id": "comfy-core",
-        "ver": "0.12.3",
-        "Node name for S&R": "PrimitiveInt",
-        "enableTabs": false,
-        "tabWidth": 65,
-        "tabXOffset": 10,
-        "hasSecondTab": false,
-        "secondTabText": "Send Back",
-        "secondTabOffset": 80,
-        "secondTabWidth": 65
-      },
-      "widgets_values": [
-        4,
-        "fixed"
-      ]
-    },
-    {
-      "id": 258,
-      "type": "PrimitiveFloat",
-      "pos": [
-        290,
-        1670
-      ],
-      "size": [
-        230,
-        110
-      ],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "value",
-          "name": "value",
-          "type": "FLOAT",
-          "widget": {
-            "name": "value"
-          },
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "FLOAT",
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "links": [
-            356
-          ]
-        }
-      ],
-      "title": "Float (CFG)",
-      "properties": {
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.7",
-          "input_ue_unconnectable": {}
-        },
-        "cnr_id": "comfy-core",
-        "ver": "0.12.3",
-        "Node name for S&R": "PrimitiveFloat",
-        "enableTabs": false,
-        "tabWidth": 65,
-        "tabXOffset": 10,
-        "hasSecondTab": false,
-        "secondTabText": "Send Back",
-        "secondTabOffset": 80,
-        "secondTabWidth": 65
-      },
-      "widgets_values": [
-        1
-      ]
-    },
-    {
-      "id": 259,
-      "type": "LoraLoaderModelOnly",
-      "pos": [
-        240,
-        1820
-      ],
-      "size": [
-        330,
-        140
-      ],
-      "flags": {},
-      "order": 14,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "model",
-          "name": "model",
-          "type": "MODEL",
-          "link": 312
-        },
-        {
-          "localized_name": "lora_name",
-          "name": "lora_name",
-          "type": "COMBO",
-          "widget": {
-            "name": "lora_name"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "strength_model",
-          "name": "strength_model",
-          "type": "FLOAT",
-          "widget": {
-            "name": "strength_model"
-          },
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "MODEL",
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            325
-          ]
-        }
-      ],
-      "properties": {
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.7",
-          "input_ue_unconnectable": {}
-        },
-        "cnr_id": "comfy-core",
-        "ver": "0.3.49",
-        "Node name for S&R": "LoraLoaderModelOnly",
-        "enableTabs": false,
-        "tabWidth": 65,
-        "tabXOffset": 10,
-        "hasSecondTab": false,
-        "secondTabText": "Send Back",
-        "secondTabOffset": 80,
-        "secondTabWidth": 65,
-        "models": [
-          {
-            "name": "Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors",
-            "url": "https://modelscope.cn/models/lightx2v/Qwen-Image-2512-Lightning/resolve/master/Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors",
-            "directory": "loras"
-          }
-        ]
-      },
-      "widgets_values": [
-        "Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors",
-        1
-      ]
-    },
-    {
-      "id": 260,
-      "type": "ComfySwitchNode",
-      "pos": [
-        710,
-        1170
-      ],
-      "size": [
-        230,
-        130
-      ],
-      "flags": {},
-      "order": 15,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "on_false",
-          "name": "on_false",
-          "type": "*",
-          "link": 324
-        },
-        {
-          "localized_name": "on_true",
-          "name": "on_true",
-          "type": "*",
-          "link": 325
-        },
-        {
-          "localized_name": "switch",
-          "name": "switch",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "switch"
-          },
-          "link": 326
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "output",
-          "name": "output",
-          "type": "*",
-          "links": [
-            367
-          ]
-        }
-      ],
-      "title": "Switch (model)",
-      "properties": {
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.7",
-          "input_ue_unconnectable": {}
-        },
-        "cnr_id": "comfy-core",
-        "ver": "0.12.3",
-        "Node name for S&R": "ComfySwitchNode",
-        "enableTabs": false,
-        "tabWidth": 65,
-        "tabXOffset": 10,
-        "hasSecondTab": false,
-        "secondTabText": "Send Back",
-        "secondTabOffset": 80,
-        "secondTabWidth": 65
-      },
-      "widgets_values": [
-        false
-      ]
-    },
-    {
-      "id": 261,
-      "type": "ComfySwitchNode",
-      "pos": [
-        710,
-        1420
-      ],
-      "size": [
-        230,
-        130
-      ],
-      "flags": {},
-      "order": 16,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "on_false",
-          "name": "on_false",
-          "type": "*",
-          "link": 355
-        },
-        {
-          "localized_name": "on_true",
-          "name": "on_true",
-          "type": "*",
-          "link": 354
-        },
-        {
-          "localized_name": "switch",
-          "name": "switch",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "switch"
-          },
-          "link": 359
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "output",
-          "name": "output",
-          "type": "*",
-          "links": [
-            368
-          ]
-        }
-      ],
-      "title": "Switch (steps)",
-      "properties": {
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.7",
-          "input_ue_unconnectable": {}
-        },
-        "cnr_id": "comfy-core",
-        "ver": "0.12.3",
-        "Node name for S&R": "ComfySwitchNode",
-        "enableTabs": false,
-        "tabWidth": 65,
-        "tabXOffset": 10,
-        "hasSecondTab": false,
-        "secondTabText": "Send Back",
-        "secondTabOffset": 80,
-        "secondTabWidth": 65
-      },
-      "widgets_values": [
-        false
-      ]
-    },
-    {
-      "id": 262,
-      "type": "ComfySwitchNode",
-      "pos": [
-        710,
-        1660
-      ],
-      "size": [
-        230,
-        130
-      ],
-      "flags": {},
-      "order": 17,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "on_false",
-          "name": "on_false",
-          "type": "*",
-          "link": 357
-        },
-        {
-          "localized_name": "on_true",
-          "name": "on_true",
-          "type": "*",
-          "link": 356
-        },
-        {
-          "localized_name": "switch",
-          "name": "switch",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "switch"
-          },
-          "link": 358
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "output",
-          "name": "output",
-          "type": "*",
-          "links": [
-            369
-          ]
-        }
-      ],
-      "title": "Switch (cfg)",
-      "properties": {
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.7",
-          "input_ue_unconnectable": {}
-        },
-        "cnr_id": "comfy-core",
-        "ver": "0.12.3",
-        "Node name for S&R": "ComfySwitchNode",
-        "enableTabs": false,
-        "tabWidth": 65,
-        "tabXOffset": 10,
-        "hasSecondTab": false,
-        "secondTabText": "Send Back",
-        "secondTabOffset": 80,
-        "secondTabWidth": 65
-      },
-      "widgets_values": [
-        false
       ]
     },
     {
@@ -1309,21 +732,21 @@
         "Node name for S&R": "SaveImage"
       },
       "widgets_values": [
-        "qwen_asset_2k"
+        "qwen_asset_batch_2k"
       ],
       "color": "#432",
       "bgcolor": "#653"
     },
     {
-      "id": 265,
+      "id": 266,
       "type": "Note",
       "pos": [
-        -1120,
-        1120
+        -980,
+        1080
       ],
       "size": [
         420,
-        146
+        130
       ],
       "flags": {},
       "order": 0,
@@ -1332,21 +755,36 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "Expanded workflow version.\\nDefault size: 2048x1152.\\nFor square character sheets, change EmptySD3LatentImage to 2048x2048.\\nKeep lightning disabled for quality-first runs."
+        "Batch-oriented asset workflow.\\nFixed base model, fixed quality path, no lightning branch.\\nRecommended for long-running ComfyUI sessions on A100-80G.\\nKeep ComfyUI resident and batch prompts externally or manually."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 267,
+      "type": "Note",
+      "pos": [
+        760,
+        1080
+      ],
+      "size": [
+        360,
+        120
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Default output: 2048x1152\\nSteps: 40\\nCFG: 4\\nNo lightning LoRA\\nFor square character sheets, change EmptySD3LatentImage to 2048x2048"
       ],
       "color": "#432",
       "bgcolor": "#653"
     }
   ],
   "links": [
-    [
-      312,
-      248,
-      0,
-      259,
-      0,
-      "MODEL"
-    ],
     [
       314,
       245,
@@ -1362,22 +800,6 @@
       250,
       0,
       "CLIP"
-    ],
-    [
-      322,
-      253,
-      0,
-      251,
-      0,
-      "LATENT"
-    ],
-    [
-      323,
-      246,
-      0,
-      251,
-      1,
-      "VAE"
     ],
     [
       316,
@@ -1412,108 +834,28 @@
       "LATENT"
     ],
     [
-      324,
+      320,
       248,
-      0,
-      260,
-      0,
-      "MODEL"
-    ],
-    [
-      325,
-      259,
-      0,
-      260,
-      1,
-      "MODEL"
-    ],
-    [
-      326,
-      256,
-      0,
-      260,
-      2,
-      "BOOLEAN"
-    ],
-    [
-      347,
-      257,
-      0,
-      253,
-      4,
-      "INT"
-    ],
-    [
-      354,
-      257,
-      0,
-      261,
-      1,
-      "INT"
-    ],
-    [
-      355,
-      254,
-      0,
-      261,
-      0,
-      "INT"
-    ],
-    [
-      356,
-      258,
-      0,
-      262,
-      1,
-      "FLOAT"
-    ],
-    [
-      357,
-      255,
-      0,
-      262,
-      0,
-      "FLOAT"
-    ],
-    [
-      358,
-      256,
-      0,
-      262,
-      2,
-      "BOOLEAN"
-    ],
-    [
-      359,
-      256,
-      0,
-      261,
-      2,
-      "BOOLEAN"
-    ],
-    [
-      367,
-      260,
       0,
       247,
       0,
       "MODEL"
     ],
     [
-      368,
-      261,
-      0,
+      322,
       253,
-      5,
-      "INT"
+      0,
+      251,
+      0,
+      "LATENT"
     ],
     [
-      369,
-      262,
+      323,
+      246,
       0,
-      253,
-      6,
-      "FLOAT"
+      251,
+      1,
+      "VAE"
     ],
     [
       376,

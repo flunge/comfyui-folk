@@ -1,22 +1,45 @@
 {
-  "last_node_id": 7,
-  "last_link_id": 4,
-  "id": "qwen-t2i-multiref-keyframe-2k",
+  "last_node_id": 4,
+  "last_link_id": 2,
+  "id": "qwen-prop-ref-variant-1024",
   "revision": 0,
   "nodes": [
     {
       "id": 1,
+      "type": "Note",
+      "pos": [
+        -980,
+        40
+      ],
+      "size": [
+        440,
+        170
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Reference-driven prop variant generation.\\nimage1 = base prop reference.\\nPrompt should describe only viewpoint or state changes.\\nDo not redesign the object from scratch."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 2,
       "type": "LoadImage",
       "pos": [
         -980,
-        -160
+        260
       ],
       "size": [
         274,
         314
       ],
       "flags": {},
-      "order": 0,
+      "order": 1,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -41,50 +64,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "character_ref.png",
-        "image"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
-      "id": 2,
-      "type": "LoadImage",
-      "pos": [
-        -980,
-        180
-      ],
-      "size": [
-        274,
-        314
-      ],
-      "flags": {},
-      "order": 1,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "slot_index": 0,
-          "links": [
-            2
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "slot_index": 1,
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.44",
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "scene_ref.png",
+        "base_ref.png",
         "image"
       ],
       "color": "#432",
@@ -92,83 +72,17 @@
     },
     {
       "id": 3,
-      "type": "LoadImage",
-      "pos": [
-        -980,
-        520
-      ],
-      "size": [
-        274,
-        314
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "slot_index": 0,
-          "links": [
-            3
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "slot_index": 1,
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.44",
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "structure_ref.png",
-        "image"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
-      "id": 4,
-      "type": "Note",
-      "pos": [
-        -560,
-        640
-      ],
-      "size": [
-        420,
-        150
-      ],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "properties": {},
-      "widgets_values": [
-        "image1 = character_ref\\nimage2 = scene_ref (optional)\\nimage3 = structure_ref (optional)\\nRun modes:\\n1) char+scene+structure\\n2) char+scene\\n3) char only\\nDefault output target is 2048x1152 keyframe generation; use qwen_refine_upscale_2k.json for final polish."
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
-      "id": 5,
       "type": "9fa6af8b-8c99-4446-8681-bccf8ba4ea54",
       "pos": [
-        20,
-        40
+        -420,
+        120
       ],
       "size": [
         383.0729166666667,
         381.10677083333337
       ],
       "flags": {},
-      "order": 4,
+      "order": 0,
       "mode": 0,
       "inputs": [
         {
@@ -181,13 +95,13 @@
           "label": "image 2 (optional)",
           "name": "image2",
           "type": "IMAGE",
-          "link": 2
+          "link": null
         },
         {
           "label": "image 3 (optional)",
           "name": "image3",
           "type": "IMAGE",
-          "link": 3
+          "link": null
         },
         {
           "name": "prompt",
@@ -227,7 +141,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            4
+            2
           ]
         }
       ],
@@ -262,34 +176,34 @@
         "ver": "0.11.0"
       },
       "widgets_values": [
-        "Cinematic keyframe, preserve character identity, preserve costume silhouette, preserve scene layout, refine structure from reference, add film-grade lighting, crisp face, crisp costume details, clean edges, high detail.",
+        "Only apply the requested variant changes while keeping the same identity, same structure, same proportions, and same base design. Do not redesign from scratch.",
         null,
         null,
         "qwen_image_edit_2511_bf16.safetensors",
         "qwen_2.5_vl_7b_fp8_scaled.safetensors",
         "qwen_image_vae.safetensors"
       ],
-      "title": "Qwen Keyframe Multiref 2K"
+      "title": "Qwen Prop Variant From Ref"
     },
     {
-      "id": 6,
+      "id": 4,
       "type": "SaveImage",
       "pos": [
-        520,
-        80
+        120,
+        120
       ],
       "size": [
         220,
         106
       ],
       "flags": {},
-      "order": 5,
+      "order": 3,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 4
+          "link": 2
         }
       ],
       "outputs": [],
@@ -299,30 +213,7 @@
         "Node name for S&R": "SaveImage"
       },
       "widgets_values": [
-        "qwen_keyframe_multiref_2k"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
-      "id": 7,
-      "type": "Note",
-      "pos": [
-        520,
-        240
-      ],
-      "size": [
-        360,
-        110
-      ],
-      "flags": {},
-      "order": 6,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "properties": {},
-      "widgets_values": [
-        "Prompt should describe shot intent, camera, action, and lighting, not restate every facial trait. Keep identity cues in character_ref."
+        "qwen_prop_variant_1024"
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -331,33 +222,17 @@
   "links": [
     [
       1,
-      1,
-      0,
-      5,
-      0,
-      "_"
-    ],
-    [
-      2,
       2,
       0,
-      5,
-      1,
-      "_"
-    ],
-    [
-      3,
       3,
       0,
-      5,
-      2,
       "_"
     ],
     [
+      2,
+      3,
+      0,
       4,
-      5,
-      0,
-      6,
       0,
       "_"
     ]
@@ -608,7 +483,7 @@
               "models": [
                 {
                   "name": "qwen_image_vae.safetensors",
-                  "url": "https://modelscope.cn/models/Comfy-Org/Qwen-Image_ComfyUI/resolve/master/split_files/vae/qwen_image_vae.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors",
                   "directory": "vae"
                 }
               ],
@@ -676,7 +551,7 @@
               "models": [
                 {
                   "name": "qwen_image_edit_2511_bf16.safetensors",
-                  "url": "https://modelscope.cn/models/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/master/split_files/diffusion_models/qwen_image_edit_2511_bf16.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_bf16.safetensors",
                   "directory": "diffusion_models"
                 }
               ],
@@ -1434,7 +1309,7 @@
               "models": [
                 {
                   "name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
-                  "url": "https://modelscope.cn/models/Comfy-Org/Qwen-Image_ComfyUI/resolve/master/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_1.5_repackaged/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
                   "directory": "text_encoders"
                 }
               ],

@@ -49,6 +49,17 @@ TEXT_ENCODERS = [
         "local_dir": "text_encoders",
         "desc": "CLIP-L + T5-XXL 文本编码器 (FLUX/SD3.5 共用)",
     },
+    {
+        "repo": "AI-ModelScope/FLUX.1-Redux-dev",
+        "files": [
+            "image_encoder/model.safetensors",
+        ],
+        "local_dir": "clip_vision",
+        "rename_map": {
+            "image_encoder/model.safetensors": "clip_vision_h.safetensors",
+        },
+        "desc": "CLIP Vision H (FLUX Redux / 场景参考编码)",
+    },
 ]
 
 # FLUX.1 系列 — 画质天花板，主力生图模型
@@ -323,6 +334,21 @@ def download_file_hf(repo: str, file_path: str, local_dir: str, progress_dict=No
     return _download(url, local_path, progress_dict, file_key)
 
 
+def download_file_ms_to_path(repo: str, file_path: str, local_path: str, progress_dict=None) -> bool:
+    """从 ModelScope 下载单个文件到指定保存路径"""
+    url = f"{MODELSCOPE_BASE}/models/{repo}/resolve/master/{file_path}"
+    file_key = os.path.basename(local_path)
+    return _download(url, local_path, progress_dict, file_key)
+
+
+def download_file_hf_to_path(repo: str, file_path: str, local_path: str, progress_dict=None) -> bool:
+    """从 HuggingFace 下载单个文件到指定保存路径"""
+    mirror = os.environ.get("HF_ENDPOINT", "https://hf-mirror.com")
+    url = f"{mirror}/{repo}/resolve/main/{file_path}"
+    file_key = os.path.basename(local_path)
+    return _download(url, local_path, progress_dict, file_key)
+
+
 def _download(url: str, local_path: str, progress_dict=None, file_key=None) -> bool:
     """通用下载，支持断点续传"""
     global shutdown_flag
@@ -491,6 +517,9 @@ def main():
             f['_repo'] = repo
             f['_source'] = source
             f['_local_dir'] = os.path.join(base_dir, m['local_dir'])
+            rename_map = m.get('rename_map', {})
+            f['_save_relpath'] = rename_map.get(f['path'], f['path'])
+            f['_save_path'] = os.path.join(f['_local_dir'], f['_save_relpath'])
 
         all_files.extend(files)
 
@@ -505,7 +534,7 @@ def main():
     if args.dry_run:
         print("\n📋 下载清单:")
         for f in all_files:
-            print(f"  {f['_source'].upper():2s} {f['_repo']:50s} → {f['_local_dir']}/{f['path']}")
+            print(f"  {f['_source'].upper():2s} {f['_repo']:50s} → {f['_save_path']}")
         return
 
     # ── 并发下载 ────────────────────────────────────
@@ -530,7 +559,7 @@ def main():
         for f in all_files:
             if shutdown_flag:
                 break
-            local_path = os.path.join(f['_local_dir'], f['path'])
+            local_path = f['_save_path']
 
             # 跳过已存在且大小匹配的文件
             if os.path.exists(local_path):
@@ -543,9 +572,9 @@ def main():
 
             file_key = os.path.basename(f['path'])
             if f['_source'] == 'hf':
-                fut = pool.submit(download_file_hf, f['_repo'], f['path'], f['_local_dir'], progress_dict)
+                fut = pool.submit(download_file_hf_to_path, f['_repo'], f['path'], local_path, progress_dict)
             else:
-                fut = pool.submit(download_file_ms, f['_repo'], f['path'], f['_local_dir'], progress_dict)
+                fut = pool.submit(download_file_ms_to_path, f['_repo'], f['path'], local_path, progress_dict)
             futures[fut] = f
 
             # 打印即将下载的文件

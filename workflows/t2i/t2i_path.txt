@@ -1,6 +1,7 @@
 root dir: /workspace/group_share/adc-sim/users/lik44/models/t2i_models
 
 .:
+clip_vision
 flux
 kolors
 qwen
@@ -22,6 +23,9 @@ flux1-depth-dev-lora.safetensors
 ./flux/redux:
 flux1-redux-dev.safetensors
 redux.png
+
+./clip_vision:
+clip_vision_h.safetensors
 
 ./kolors:
 MODEL_LICENSE

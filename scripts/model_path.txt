@@ -348,6 +348,9 @@ workspace/group_share/adc-sim/users/lik44/models/t2i_models/flux/redux:
 flux1-redux-dev.safetensors
 redux.png
 
+workspace/group_share/adc-sim/users/lik44/models/t2i_models/clip_vision:
+clip_vision_h.safetensors
+
 workspace/group_share/adc-sim/users/lik44/models/t2i_models/kolors:
 MODEL_LICENSE
 controlnet

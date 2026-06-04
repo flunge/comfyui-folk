@@ -1,25 +1,47 @@
 # T2I — 本地文生图工作流
 
-包含两套路线：
-- `Flux.1-dev`：已有轻量和参考图链路，适合快速迭代
-- `Qwen-Image`：2K 上限工作流，优先打磨角色立绘、场景/道具图和剧情关键帧
+当前推荐按两类需求使用：
+
+- 原生生成：
+  不依赖参考图，从零生成角色、场景、道具的 canonical base
+- 参考生成：
+  基于已有参考图生成角色阶段变体、场景变体、道具变体，以及多元素关键帧
 
 ## 文件
 
 | 文件 | 分辨率 | 适用场景 |
 |------|--------|---------|
 | `flux_multiref_1024.json` | 1024×576 (16:9) | 轻量生成，快速迭代 |
-| `flux_multiref_2048.json` | 2048×1152 (16:9) | 高质量输出，关键帧级 |
-| `qwen_t2i_asset_2k.json` | 2048×1152 (默认) | 纯文本角色/场景/道具生成 |
-| `qwen_t2i_multiref_keyframe_2k.json` | 2048×1152 | 参考图驱动剧情关键帧 |
+| `flux_scene_multiview_guided_1024.json` | 1024×576 | 场景参考驱动的单视角派生 |
+| `qwen_character_base_2k.json` | 2048×2048 / 2048×1152 | 原生角色主资产生成 |
+| `qwen_scene_base_2k.json` | 2048×1152 | 原生场景主资产生成 |
+| `qwen_prop_base_2k.json` | 2048×1152 | 原生道具主资产生成 |
+| `qwen_character_ref_variant_2k.json` | 2048×2048 / 2048×1152 | 基于角色主资产生成阶段/造型变体 |
+| `qwen_scene_ref_variant_1024.json` | 1024×576 | Legacy：Qwen Edit 版场景变体，不推荐继续用于改视角 |
+| `qwen_prop_ref_variant_1024.json` | 1024×576 | 基于道具主资产生成视角/状态变体 |
+| `qwen_keyframe_multiref_1024.json` | 1024×576 | 多参考图关键帧生成 |
 | `qwen_refine_upscale_2k.json` | 2048×1152 | 首图高分修复、细节重绘 |
+| `qwen_t2i_asset_2k.json` | 2048×1152 | Legacy：展开版原始 Qwen 资产流 |
+| `qwen_t2i_asset_batch_2k.json` | 2048×1152 | Legacy：精简批处理资产流 |
 
 ## Qwen 工作流推荐顺序
 
-- 纯文本角色、场景、道具：
-  `qwen_t2i_asset_2k.json` -> `qwen_refine_upscale_2k.json`
-- 参考图关键帧：
-  `qwen_t2i_multiref_keyframe_2k.json` -> `qwen_refine_upscale_2k.json`
+- 原生角色：
+  `qwen_character_base_2k.json`
+- 原生场景：
+  `qwen_scene_base_2k.json`
+- 场景参考驱动新视角：
+  `flux_scene_multiview_guided_1024.json`
+- 原生道具：
+  `qwen_prop_base_2k.json`
+- 角色阶段/造型变体：
+  `qwen_character_ref_variant_2k.json`
+- 道具视角/状态变体：
+  `qwen_prop_ref_variant_1024.json`
+- 多元素关键帧：
+  `qwen_keyframe_multiref_1024.json`
+- 高分修复：
+  `qwen_refine_upscale_2k.json`
 
 ## Qwen 依赖模型
 
@@ -46,56 +68,44 @@ python3 pipelines/ComfyUI/scripts/download_qwen_image_models.py --model lightnin
 - `extra_model_paths.yaml`
 - `t2i_path.txt`
 
-## 节点架构
+如需使用 `flux_scene_multiview_guided_1024.json`，除了 FLUX 基础模型外，还需要：
 
-```
-[文本编码]                  [参考图 Redux]              [生成]
-DualCLIPLoader ─┐            CLIPVisionLoader           UNETLoader
-  ├→CLIPTextEncode(+)        LoadImage(char_5view)      VAELoader
-  └→CLIPTextEncode(-)          →ImageScale              EmptyLatentImage
-                ↓              →CLIPVisionEncode         KSampler
-           StyleModelApply       →StyleModelApply(+)       →VAEDecode
-              (char ref)                                   →SaveImage
-                ↓                                       
-           StyleModelApply    
-              (scene ref)      [ControlNet]
-                ↓              LoadImage(canny_ref)
-           ControlNetApply       →Canny
-              (canny)           ControlNetLoader
+- `clip_vision/clip_vision_h.safetensors`
+
+可直接使用：
+
+```bash
+python3 pipelines/ComfyUI/scripts/download_t2i_models.py --category flux
 ```
 
-## 输入说明
+该命令会从 `AI-ModelScope/FLUX.1-Redux-dev` 下载：
 
-拖入工作流后，需要设置以下 **LoadImage** 节点：
+- `image_encoder/model.safetensors`
 
-| 节点 | 图片 | 说明 |
-|------|------|------|
-| `LoadImage` (char) | `assets/characters/{id}/{variant}/5view_2k.jpg` | 角色 5 视图参考图 |
-| `LoadImage` (scene) | `assets/scenes/{scene_id}/grid.jpg` | 场景参考图 |
-| `LoadImage` (canny) | 起始关键帧或参考结构图 | 用于 Canny 边缘检测 |
+并重命名落盘为：
+
+- `clip_vision/clip_vision_h.safetensors`
+
+## 使用建议
+
+- `base` 工作流只负责定义“身份”
+  - 人物：脸、体型、服装
+  - 场景：空间布局、光照、地标物件
+  - 道具：结构、材质、磨损
+- `ref_variant` 工作流只负责定义“变化”
+  - 不要重写全量身份
+  - 只写阶段变化、视角变化、天气变化、状态变化
+- `keyframe_multiref` 负责组合多个已有资产
+  - `character_ref`
+  - `scene_ref`
+  - `prop_ref`
+  - 可选 `structure_ref`
 
 ## 提示词编辑
 
-- `CLIPTextEncode` (positive)：修改正面提示词，描述镜头内容、角色、动作、氛围
-- `CLIPTextEncode` (negative)：负面提示词（默认已包含常见负面词）
-- **建议格式**：`[shot description], [character appearance], [scene description], 国漫3D风格, PBR材质, 电影级布光`
-
-Qwen 路线建议：
-
-- 资产图：强调主体、材质、边缘、背景要求
-- 关键帧：强调镜头、动作、构图、灯光，不要重复写过多身份细节
-- refine：强调“保持构图不变，只提升脸部、服装、发丝、材质细节”
-
-## 参考图强度调整
-
-- `StyleModelApply` (char)：`strength` 参数（默认 1.0），控制角色参考权重
-- `StyleModelApply` (scene)：`strength` 参数（默认 0.6），控制场景参考权重
-- `ControlNetApply`：`strength` 参数（默认 0.7），控制 Canny 结构约束强度
-
-## LoRA 扩展
-
-如需叠加角色面部 LoRA（如 `chenmo_face_v1.safetensors`），在 `KSampler` 前面添加：
-1. `LoRALoader`：加载 LoRA 文件
-2. 将 LoRA 输出的 MODEL 连接到 KSampler 的 model 输入
-
-LoRA 文件放到 `models/loras/` 目录。
+- `base`：
+  写清楚主体身份，不要要求一次输出多机位拼板
+- `ref_variant`：
+  prompt 只写变化项，不写完整身份设定
+- `keyframe_multiref`：
+  prompt 只写镜头内容、动作、构图、光照和情绪，不重写角色脸和场景世界观
