@@ -421,6 +421,40 @@ def _download(url: str, local_path: str, progress_dict=None, file_key=None) -> b
         return False
 
 
+def probe_remote_size_ms(repo: str, file_path: str) -> int:
+    """对显式文件任务补探远端大小，避免重复下载。"""
+    url = f"{MODELSCOPE_BASE}/models/{repo}/resolve/master/{file_path}"
+    try:
+        resp = requests.get(url, headers={"Range": "bytes=0-0"}, stream=True, timeout=(15, 60))
+        content_range = resp.headers.get("Content-Range", "")
+        content_length = resp.headers.get("Content-Length", "")
+        resp.close()
+        if "/" in content_range:
+            return int(content_range.split("/")[-1])
+        if content_length:
+            return int(content_length)
+    except Exception:
+        return 0
+    return 0
+
+
+def probe_remote_size_hf(repo: str, file_path: str) -> int:
+    mirror = os.environ.get("HF_ENDPOINT", "https://hf-mirror.com")
+    url = f"{mirror}/{repo}/resolve/main/{file_path}"
+    try:
+        resp = requests.get(url, headers={"Range": "bytes=0-0"}, stream=True, timeout=(15, 60))
+        content_range = resp.headers.get("Content-Range", "")
+        content_length = resp.headers.get("Content-Length", "")
+        resp.close()
+        if "/" in content_range:
+            return int(content_range.split("/")[-1])
+        if content_length:
+            return int(content_length)
+    except Exception:
+        return 0
+    return 0
+
+
 def migrate_legacy_paths(base_dir: str) -> None:
     """兼容旧版本落盘目录，必要时自动迁移。"""
     legacy_to_new = [
@@ -576,6 +610,11 @@ def main():
             rename_map = m.get('rename_map', {})
             f['_save_relpath'] = rename_map.get(f['path'], f['path'])
             f['_save_path'] = os.path.join(f['_local_dir'], f['_save_relpath'])
+            if f.get('size', 0) == 0:
+                if source == 'hf':
+                    f['size'] = probe_remote_size_hf(repo, f['path'])
+                else:
+                    f['size'] = probe_remote_size_ms(repo, f['path'])
 
         all_files.extend(files)
 

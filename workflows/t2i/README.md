@@ -12,7 +12,8 @@
 | 文件 | 分辨率 | 适用场景 |
 |------|--------|---------|
 | `flux_multiref_1024.json` | 1024×576 (16:9) | 轻量生成，快速迭代 |
-| `flux_scene_multiview_guided_1024.json` | 1024×576 | 场景参考驱动的单视角派生 |
+| `scene_view_controlled_1024.json` | 1024×576 | 基于 control image 的可控视角场景派生 |
+| `flux_scene_multiview_guided_1024.json` | 1024×576 | Legacy：早期 Flux 场景参考派生，不再推荐 |
 | `qwen_character_base_2k.json` | 2048×2048 / 2048×1152 | 原生角色主资产生成 |
 | `qwen_scene_base_2k.json` | 2048×1152 | 原生场景主资产生成 |
 | `qwen_prop_base_2k.json` | 2048×1152 | 原生道具主资产生成 |
@@ -30,8 +31,8 @@
   `qwen_character_base_2k.json`
 - 原生场景：
   `qwen_scene_base_2k.json`
-- 场景参考驱动新视角：
-  `flux_scene_multiview_guided_1024.json`
+- 场景可控视角新图：
+  `scene_view_controlled_1024.json`
 - 原生道具：
   `qwen_prop_base_2k.json`
 - 角色阶段/造型变体：
@@ -68,9 +69,13 @@ python3 pipelines/ComfyUI/scripts/download_qwen_image_models.py --model lightnin
 - `extra_model_paths.yaml`
 - `t2i_path.txt`
 
-如需使用 `flux_scene_multiview_guided_1024.json`，除了 FLUX 基础模型外，还需要：
+如需使用 `scene_view_controlled_1024.json`，除了基础模型外，还需要：
 
 - `clip_vision/clip_vision_h.safetensors`
+- `z_image/diffusion_models/z_image_turbo_bf16.safetensors`
+- `z_image/text_encoders/qwen_3_4b.safetensors`
+- `z_image/model_patches/Z-Image-Turbo-Fun-Controlnet-Union.safetensors`
+- `z_image/vae/ae.safetensors`
 
 可直接使用：
 
@@ -85,6 +90,13 @@ python3 pipelines/ComfyUI/scripts/download_t2i_models.py --category flux
 并重命名落盘为：
 
 - `clip_vision/clip_vision_h.safetensors`
+
+同时会下载 Z-Image-Turbo 所需文件到：
+
+- `z_image/diffusion_models/`
+- `z_image/text_encoders/`
+- `z_image/model_patches/`
+- `z_image/vae/`
 
 ## 使用建议
 

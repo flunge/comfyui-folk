@@ -1,6 +1,6 @@
 {
-  "last_node_id": 103,
-  "last_link_id": 2002,
+  "last_node_id": 104,
+  "last_link_id": 2003,
   "id": "scene-view-controlled-1024",
   "revision": 0,
   "nodes": [
@@ -8,7 +8,7 @@
       "id": 101,
       "type": "Note",
       "pos": [
-        -900,
+        -580,
         -140
       ],
       "size": [
@@ -22,7 +22,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "Scene controlled-view workflow (expanded).\\n\\n1. Load a TARGET-VIEW control image. This should be a canny / rough layout / target composition image representing the desired 45deg or side view.\\n2. Edit the prompt in CLIPTextEncode.\\n3. Run to generate one new controlled scene view.\\n\\nDo not feed the original front-view scene master directly as the control image if you expect a new viewpoint."
+        "Scene controlled-view workflow (expanded).\\n\\n1. Load a TARGET-VIEW control image in the upper LoadImage node. This should be a canny / rough layout / target composition image representing the desired 45deg or side view.\\n2. Load the original scene master image in the lower LoadImage node. This is used to preserve scene identity.\\n3. Edit the prompt in CLIPTextEncode.\\n4. Run to generate one new controlled scene view."
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -31,7 +31,7 @@
       "id": 100,
       "type": "LoadImage",
       "pos": [
-        -900,
+        -580,
         200
       ],
       "size": [
@@ -74,7 +74,7 @@
       "id": 1,
       "type": "CLIPLoader",
       "pos": [
-        78.60376290329597,
+        398.603762903296,
         400.18835735013636
       ],
       "size": [
@@ -153,7 +153,7 @@
       "id": 2,
       "type": "UNETLoader",
       "pos": [
-        78.60376290329597,
+        398.603762903296,
         250.18830461764446
       ],
       "size": [
@@ -221,7 +221,7 @@
       "id": 3,
       "type": "VAELoader",
       "pos": [
-        78.60376290329597,
+        398.603762903296,
         580.1883163318098
       ],
       "size": [
@@ -280,7 +280,7 @@
       "id": 4,
       "type": "ModelPatchLoader",
       "pos": [
-        78.60376290329597,
+        398.603762903296,
         710.1884895078001
       ],
       "size": [
@@ -338,7 +338,7 @@
       "id": 6,
       "type": "ModelSamplingAuraFlow",
       "pos": [
-        848.6039930366841,
+        1168.6039930366842,
         190.18831829042028
       ],
       "size": [
@@ -396,7 +396,7 @@
       "id": 7,
       "type": "KSampler",
       "pos": [
-        848.6039930366841,
+        1168.6039930366842,
         300.1883511666192
       ],
       "size": [
@@ -523,7 +523,7 @@
       "id": 8,
       "type": "ConditioningZeroOut",
       "pos": [
-        598.2704434516113,
+        918.2704434516113,
         744.8550053486888
       ],
       "size": [
@@ -567,9 +567,9 @@
     },
     {
       "id": 9,
-      "type": "QwenImageDiffsynthControlnet",
+      "type": "ZImageFunControlnet",
       "pos": [
-        458.27041741180085,
+        778.2704174118008,
         904.8549978594301
       ],
       "size": [
@@ -581,43 +581,41 @@
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "model",
           "name": "model",
           "type": "MODEL",
           "link": 9
         },
         {
-          "localized_name": "model_patch",
           "name": "model_patch",
           "type": "MODEL_PATCH",
           "link": 10
         },
         {
-          "localized_name": "vae",
           "name": "vae",
           "type": "VAE",
           "link": 11
         },
         {
-          "localized_name": "image",
-          "name": "image",
-          "type": "IMAGE",
-          "link": 22
-        },
-        {
-          "localized_name": "mask",
-          "name": "mask",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        },
-        {
-          "localized_name": "strength",
           "name": "strength",
           "type": "FLOAT",
           "widget": {
             "name": "strength"
           },
+          "link": null
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 22
+        },
+        {
+          "name": "inpaint_image",
+          "type": "IMAGE",
+          "link": 2003
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
           "link": null
         }
       ],
@@ -645,13 +643,14 @@
       },
       "widgets_values": [
         1
-      ]
+      ],
+      "title": "ZImageFunControlnet"
     },
     {
       "id": 12,
       "type": "CLIPTextEncode",
       "pos": [
-        398.27043108457656,
+        718.2704310845766,
         244.85497443110125
       ],
       "size": [
@@ -711,7 +710,7 @@
       "id": 5,
       "type": "VAEDecode",
       "pos": [
-        1188.6038576146689,
+        1508.6038576146689,
         200.18834498310116
       ],
       "size": [
@@ -764,7 +763,7 @@
       "id": 15,
       "type": "ImageScaleToTotalPixels",
       "pos": [
-        70,
+        390,
         920
       ],
       "size": [
@@ -834,7 +833,7 @@
       "id": 11,
       "type": "GetImageSize",
       "pos": [
-        390,
+        710,
         1150
       ],
       "size": [
@@ -896,7 +895,7 @@
       "id": 10,
       "type": "EmptySD3LatentImage",
       "pos": [
-        610,
+        930,
         1130
       ],
       "size": [
@@ -968,7 +967,7 @@
       "id": 14,
       "type": "Canny",
       "pos": [
-        70,
+        390,
         1080
       ],
       "size": [
@@ -1030,7 +1029,7 @@
       "id": 16,
       "type": "PreviewImage",
       "pos": [
-        70,
+        390,
         1220
       ],
       "size": [
@@ -1060,7 +1059,7 @@
       "id": 103,
       "type": "SaveImage",
       "pos": [
-        1330,
+        1650,
         500
       ],
       "size": [
@@ -1093,7 +1092,7 @@
       "id": 102,
       "type": "Note",
       "pos": [
-        980,
+        1300,
         620
       ],
       "size": [
@@ -1107,7 +1106,50 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "This workflow controls viewpoint through the input control image.\\nFor best results, derive the control image from a target-view canny / sketch / layout.\\nUse the prompt to preserve scene identity, weather, lighting family, and landmark logic."
+        "Input contract:\n- upper LoadImage = target-view control image\\n- lower LoadImage = original scene master reference\\n- CLIPTextEncode = preserve identity + describe target viewpoint / weather / time\\n\\nThis version uses ZImageFunControlnet so the model can read both control geometry and a scene reference image."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 104,
+      "type": "LoadImage",
+      "pos": [
+        -900,
+        560
+      ],
+      "size": [
+        274,
+        314
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            2003
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "scene_master_ref.png",
+        "image"
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -1272,6 +1314,14 @@
       0,
       103,
       0,
+      "IMAGE"
+    ],
+    [
+      2003,
+      104,
+      0,
+      9,
+      5,
       "IMAGE"
     ]
   ],
