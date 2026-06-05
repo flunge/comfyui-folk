@@ -103,6 +103,15 @@ python3 pipelines/ComfyUI/scripts/check_scene_view_controlled_runtime.py
 
 - `Z-Image-Turbo-Fun-Controlnet-Union.safetensors`
 
+推荐输入方式：
+
+- 上方 `Target View Control Image`：
+  放目标机位的 canny / 草图 / rough layout
+- 下方 `Scene Master Reference`：
+  放原始场景母版图
+- `Scene Identity + View Prompt`：
+  只写“保持同一场景 identity + 目标视角/天气/时间变化”
+
 ## 使用建议
 
 - `base` 工作流只负责定义“身份”

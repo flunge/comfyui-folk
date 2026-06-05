@@ -1,5 +1,5 @@
 {
-  "last_node_id": 104,
+  "last_node_id": 105,
   "last_link_id": 2003,
   "id": "scene-view-controlled-1024",
   "revision": 0,
@@ -1069,6 +1069,29 @@
       "color": "#432",
       "bgcolor": "#653",
       "title": "Scene Master Reference"
+    },
+    {
+      "id": 105,
+      "type": "Note",
+      "pos": [
+        1520,
+        120
+      ],
+      "size": [
+        520,
+        200
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Example 45deg prompt:\nGenerate the exact same scene as the master reference, keeping the same architecture, same landmark object placement, same material system, same lighting family, and same world identity. Follow the target-view control image to produce a true front-right 45 degree shot. Preserve the same scene, but do not copy the original front view. Night rain / warm interior / blue neon etc should only be added if explicitly requested."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
     }
   ],
   "links": [
