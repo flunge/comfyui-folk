@@ -92,10 +92,11 @@ python3 pipelines/ComfyUI/scripts/download_t2i_models.py --category flux
 在服务器上正式测试前，可先执行：
 
 ```bash
+python3 pipelines/ComfyUI/scripts/check_scene_view_controlled_workflow.py
 python3 pipelines/ComfyUI/scripts/check_scene_view_controlled.py
 ```
 
-若输出 `PASS scene_view_controlled prerequisites are ready`，再重启 ComfyUI 并测试 workflow。
+若两个检查都输出 `PASS`，再重启 ComfyUI 并测试 workflow。
 
 ## 使用建议
 
