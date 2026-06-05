@@ -1,0 +1,497 @@
+{
+  "last_node_id": 15,
+  "last_link_id": 13,
+  "id": "flux-scene-angle-stepper-1024",
+  "revision": 0,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "Note",
+      "pos": [20, -500],
+      "size": [560, 240],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Scene angle stepper (Flux + Redux).\\n\\nUse this only for small viewpoint steps.\\nOne run should move the camera by about 10 to 15 degrees at most.\\nFeed the output back as the next input if you need a larger total rotation.\\n\\nGoal: higher scene identity retention by avoiding one-shot large angle jumps."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 2,
+      "type": "DualCLIPLoader",
+      "pos": [-900, -600],
+      "size": [400, 106],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 0,
+          "links": [1, 2]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "widgets_values": [
+        "clip_l.safetensors",
+        "t5xxl_fp8_e4m3fn.safetensors",
+        "flux",
+        "default"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 3,
+      "type": "CLIPTextEncode",
+      "pos": [-900, -400],
+      "size": [520, 300],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [3]
+        }
+      ],
+      "title": "One Small Camera Step",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "Exact same scene as the reference image. Preserve the same skyline arrangement, same road structure, same bridge placement, same car placement logic, same fog area, and the same blue-orange rain-night mood. Do not redesign or replace the city. Only move the camera by a very small step to the front-right, around 10 to 15 degrees, while keeping the original composition anchors."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 4,
+      "type": "CLIPTextEncode",
+      "pos": [-900, -20],
+      "size": [520, 220],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [10]
+        }
+      ],
+      "title": "Negative Prompt",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "different city, different skyline, different bridge placement, different road layout, redesigned composition, removed cars, missing fog, side view too extreme, large angle jump, text, watermark, blurry details"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 5,
+      "type": "UNETLoader",
+      "pos": [100, -600],
+      "size": [315, 106],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [7]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "flux1-dev-fp8.safetensors",
+        "default"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 6,
+      "type": "VAELoader",
+      "pos": [100, -400],
+      "size": [220, 100],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 0,
+          "links": [11]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "ae.safetensors"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 7,
+      "type": "EmptyLatentImage",
+      "pos": [100, -200],
+      "size": [220, 106],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [9]
+        }
+      ],
+      "widgets_values": [1024, 576, 1],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 8,
+      "type": "LoadImage",
+      "pos": [-900, 760],
+      "size": [274, 314],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [4]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": null
+        }
+      ],
+      "title": "Current Scene Input",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": ["scene_step_input.png", "image"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 9,
+      "type": "CLIPVisionLoader",
+      "pos": [-900, 1160],
+      "size": [320, 82],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP_VISION",
+          "type": "CLIP_VISION",
+          "slot_index": 0,
+          "links": [5]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "CLIPVisionLoader"
+      },
+      "widgets_values": ["clip_vision_h.safetensors"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 10,
+      "type": "CLIPVisionEncode",
+      "pos": [-900, 1310],
+      "size": [320, 120],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 5
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP_VISION_OUTPUT",
+          "type": "CLIP_VISION_OUTPUT",
+          "slot_index": 0,
+          "links": [6]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "CLIPVisionEncode"
+      },
+      "widgets_values": [],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 11,
+      "type": "StyleModelLoader",
+      "pos": [-900, 1510],
+      "size": [320, 82],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STYLE_MODEL",
+          "type": "STYLE_MODEL",
+          "slot_index": 0,
+          "links": [8]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "StyleModelLoader"
+      },
+      "widgets_values": ["flux1-redux-dev.safetensors"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 12,
+      "type": "StyleModelApply",
+      "pos": [-400, 1510],
+      "size": [420, 186],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 3
+        },
+        {
+          "name": "style_model",
+          "type": "STYLE_MODEL",
+          "link": 8
+        },
+        {
+          "name": "clip_vision_output",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [12]
+        }
+      ],
+      "title": "Redux Identity Injection",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "StyleModelApply"
+      },
+      "widgets_values": [1.0, "multiply"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 13,
+      "type": "KSampler",
+      "pos": [600, 400],
+      "size": [460, 315],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 7
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 12
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 10
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [0]
+        }
+      ],
+      "title": "Main Sampler",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [42, "randomize", 40, 2.0, "dpmpp_2m", "sgm_uniform", 1.0],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 14,
+      "type": "VAEDecode",
+      "pos": [600, 760],
+      "size": [220, 100],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 0
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [13]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 15,
+      "type": "SaveImage",
+      "pos": [600, 920],
+      "size": [260, 106],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 13
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": ["flux_scene_angle_stepper_1024"]
+    }
+  ],
+  "links": [
+    [1, 2, 0, 3, 0, "CLIP"],
+    [2, 2, 0, 4, 0, "CLIP"],
+    [3, 3, 0, 12, 0, "CONDITIONING"],
+    [4, 8, 0, 10, 1, "IMAGE"],
+    [5, 9, 0, 10, 0, "CLIP_VISION"],
+    [6, 10, 0, 12, 2, "CLIP_VISION_OUTPUT"],
+    [7, 5, 0, 13, 0, "MODEL"],
+    [8, 11, 0, 12, 1, "STYLE_MODEL"],
+    [9, 7, 0, 13, 3, "LATENT"],
+    [10, 4, 0, 13, 2, "CONDITIONING"],
+    [11, 6, 0, 14, 1, "VAE"],
+    [12, 12, 0, 13, 1, "CONDITIONING"],
+    [0, 13, 0, 14, 0, "LATENT"],
+    [13, 14, 0, 15, 0, "IMAGE"]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

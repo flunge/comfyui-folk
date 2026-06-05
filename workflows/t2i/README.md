@@ -14,6 +14,8 @@
 | `flux_multiref_1024.json` | 1024×576 (16:9) | 轻量生成，快速迭代 |
 | `scene_view_controlled_1024.json` | 1024×576 | 基于 control image 的可控视角场景派生 |
 | `flux_scene_multiview_guided_1024.json` | 1024×576 | Legacy：早期 Flux 场景参考派生，不再推荐 |
+| `qwen_scene_view_edit_1024.json` | 1024×576 | 基于 Qwen edit 的同场景轻量改视角 |
+| `flux_scene_angle_stepper_1024.json` | 1024×576 | Flux 小步转视角，适合 10°-15° 逐步迭代 |
 | `qwen_character_base_2k.json` | 2048×2048 / 2048×1152 | 原生角色主资产生成 |
 | `qwen_scene_base_2k.json` | 2048×1152 | 原生场景主资产生成 |
 | `qwen_prop_base_2k.json` | 2048×1152 | 原生道具主资产生成 |
@@ -33,6 +35,10 @@
   `qwen_scene_base_2k.json`
 - 场景可控视角新图：
   `scene_view_controlled_1024.json`
+- 场景轻量改视角：
+  `qwen_scene_view_edit_1024.json`
+- 场景逐步转视角：
+  `flux_scene_angle_stepper_1024.json`
 - 原生道具：
   `qwen_prop_base_2k.json`
 - 角色阶段/造型变体：
