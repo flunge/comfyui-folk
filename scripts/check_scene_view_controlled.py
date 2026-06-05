@@ -19,9 +19,9 @@ REQUIRED_FILES = [
     ROOT / "z_image" / "diffusion_models" / "z_image_turbo_bf16.safetensors",
     ROOT / "z_image" / "text_encoders" / "qwen_3_4b.safetensors",
     ROOT / "z_image" / "vae" / "ae.safetensors",
-    ROOT / "z_image" / "model_patches" / "Z-Image-Turbo-Fun-Controlnet-Union.safetensors",
 ]
 
+PATCH_FILE = ROOT / "z_image" / "model_patches" / "Z-Image-Turbo-Fun-Controlnet-Union.safetensors"
 LEGACY_PATCH = ROOT / "z_image" / "controlnet" / "Z-Image-Turbo-Fun-Controlnet-Union.safetensors"
 EXTRA_PATHS = COMFY_DIR / "extra_model_paths.yaml"
 
@@ -70,8 +70,14 @@ def main() -> int:
         all_ok = all_ok and ok
         print(line)
 
-    if LEGACY_PATCH.exists():
-        print(f"WARN legacy patch file still exists: {LEGACY_PATCH}")
+    if PATCH_FILE.exists():
+        print(f"OK   {PATCH_FILE} ({PATCH_FILE.stat().st_size / 1024 / 1024:.0f}MB)")
+    elif LEGACY_PATCH.exists():
+        print(f"OK   legacy patch path accepted: {LEGACY_PATCH} ({LEGACY_PATCH.stat().st_size / 1024 / 1024:.0f}MB)")
+    else:
+        all_ok = False
+        print(f"MISS {PATCH_FILE}")
+        print(f"MISS {LEGACY_PATCH}")
 
     ok, lines = check_extra_paths()
     all_ok = all_ok and ok
