@@ -1,167 +1,477 @@
 {
   "last_node_id": 15,
-  "last_link_id": 14,
+  "last_link_id": 13,
   "id": "flux-scene-multiview-redux-1024",
-  "revision": 0,
+  "revision": 2,
   "nodes": [
     {
-      "id": 1, "type": "Note",
-      "pos": [20, -500], "size": [520, 200],
-      "flags": {}, "order": 0, "mode": 0,
-      "inputs": [], "outputs": [],
-      "properties": {},
-      "widgets_values": ["场景多视角生成 (Flux + Redux)\n\nimage: 场景正面参考图\nRedux 提取视觉风格 → StyleModelApply 注入 conditioning\nprompt: 描述目标视角（45°/侧面），Redux 保持场景风格一致\n\n模型路径:\n  UNETLoader: flux1-dev-fp8.safetensors\n  StyleModelLoader: flux1-redux-dev.safetensors\n  CLIPVisionLoader: clip_vision_h.safetensors"],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 2, "type": "DualCLIPLoader",
-      "pos": [-900, -600], "size": [400, 106],
-      "flags": {}, "order": 1, "mode": 0,
-      "inputs": [], "outputs": [{"name": "CLIP", "type": "CLIP", "slot_index": 0, "links": [1, 2]}],
-      "properties": {"cnr_id": "comfy-core", "ver": "0.3.44", "Node name for S&R": "DualCLIPLoader"},
-      "widgets_values": ["clip_l.safetensors", "t5xxl_fp8_e4m3fn.safetensors", "flux", "default"],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 3, "type": "CLIPTextEncode",
-      "pos": [-900, -400], "size": [480, 280],
-      "flags": {}, "order": 5, "mode": 0,
-      "inputs": [{"name": "clip", "type": "CLIP", "link": 1}],
-      "outputs": [{"name": "CONDITIONING", "type": "CONDITIONING", "slot_index": 0, "links": [3]}],
-      "properties": {"cnr_id": "comfy-core", "ver": "0.3.44", "Node name for S&R": "CLIPTextEncode"},
-      "widgets_values": ["Master shot of the same scene viewed from a right 45-degree angle, 3/4 side view revealing depth and side details. Same architecture, same environment, same natural soft lighting, same material weathering and surface imperfections. Real photo, DSLR photography, highly detailed textures, rich surface detail, material definition, natural color palette, soft contrast, realistic material properties, fine grain, ultra-detailed, 8K, ambient lighting, soft shadows."],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 4, "type": "CLIPTextEncode",
-      "pos": [-900, 0], "size": [480, 200],
-      "flags": {}, "order": 6, "mode": 0,
-      "inputs": [{"name": "clip", "type": "CLIP", "link": 2}],
-      "outputs": [{"name": "CONDITIONING", "type": "CONDITIONING", "slot_index": 0, "links": [10]}],
-      "properties": {"cnr_id": "comfy-core", "ver": "0.3.44", "Node name for S&R": "CLIPTextEncode"},
-      "widgets_values": ["3D render, CG, CGI, mesh, polygon, low poly, synthetic, fake, smooth plastic, claymation, video game, cartoon, anime, illustration, painting, oversaturated, high contrast, harsh lighting, overexposed, oversharpened, blurry, low quality, distorted, deformed, ugly, watermark, text, worst quality"],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 5, "type": "UNETLoader",
-      "pos": [100, -600], "size": [315, 106],
-      "flags": {}, "order": 2, "mode": 0,
-      "inputs": [], "outputs": [{"name": "MODEL", "type": "MODEL", "slot_index": 0, "links": [7]}],
-      "properties": {"cnr_id": "comfy-core", "ver": "0.3.44", "Node name for S&R": "UNETLoader"},
-      "widgets_values": ["flux1-dev-fp8.safetensors", "default"],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 6, "type": "VAELoader",
-      "pos": [100, -400], "size": [220, 100],
-      "flags": {}, "order": 3, "mode": 0,
-      "inputs": [], "outputs": [{"name": "VAE", "type": "VAE", "slot_index": 0, "links": [11]}],
-      "properties": {"cnr_id": "comfy-core", "ver": "0.3.44", "Node name for S&R": "VAELoader"},
-      "widgets_values": ["ae.safetensors"],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 7, "type": "EmptyLatentImage",
-      "pos": [100, -200], "size": [220, 106],
-      "flags": {}, "order": 4, "mode": 0,
-      "inputs": [], "outputs": [{"name": "LATENT", "type": "LATENT", "slot_index": 0, "links": [9]}],
-      "widgets_values": [1024, 576, 1],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 8, "type": "LoadImage",
-      "pos": [-900, 750], "size": [274, 314],
-      "flags": {}, "order": 7, "mode": 0,
-      "inputs": [], "outputs": [
-        {"name": "IMAGE", "type": "IMAGE", "slot_index": 0, "links": [4]},
-        {"name": "MASK", "type": "MASK", "slot_index": 1, "links": null}
-      ],
-      "properties": {"cnr_id": "comfy-core", "ver": "0.3.44", "Node name for S&R": "LoadImage"},
-      "widgets_values": ["scene_front_view.png", "image"],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 9, "type": "CLIPVisionLoader",
-      "pos": [-900, 1150], "size": [320, 82],
-      "flags": {}, "order": 8, "mode": 0,
-      "inputs": [], "outputs": [{"name": "CLIP_VISION", "type": "CLIP_VISION", "slot_index": 0, "links": [5]}],
-      "properties": {"cnr_id": "comfy-core", "ver": "0.3.44", "Node name for S&R": "CLIPVisionLoader"},
-      "widgets_values": ["clip_vision_h.safetensors"],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 10, "type": "CLIPVisionEncode",
-      "pos": [-900, 1300], "size": [320, 120],
-      "flags": {}, "order": 9, "mode": 0,
-      "inputs": [
-        {"name": "clip_vision", "type": "CLIP_VISION", "link": 5},
-        {"name": "image", "type": "IMAGE", "link": 4}
-      ],
-      "outputs": [{"name": "CLIP_VISION_OUTPUT", "type": "CLIP_VISION_OUTPUT", "slot_index": 0, "links": [6]}],
-      "properties": {"cnr_id": "comfy-core", "ver": "0.3.44", "Node name for S&R": "CLIPVisionEncode"},
-      "widgets_values": [],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 11, "type": "StyleModelLoader",
-      "pos": [-900, 1500], "size": [320, 82],
-      "flags": {}, "order": 10, "mode": 0,
-      "inputs": [], "outputs": [{"name": "STYLE_MODEL", "type": "STYLE_MODEL", "slot_index": 0, "links": [8]}],
-      "properties": {"cnr_id": "comfy-core", "ver": "0.3.44", "Node name for S&R": "StyleModelLoader"},
-      "widgets_values": ["flux1-redux-dev.safetensors"],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 12, "type": "StyleModelApply",
-      "pos": [-400, 1500], "size": [420, 186],
-      "flags": {}, "order": 11, "mode": 0,
-      "inputs": [
-        {"name": "conditioning", "type": "CONDITIONING", "link": 3},
-        {"name": "style_model", "type": "STYLE_MODEL", "link": 8},
-        {"name": "clip_vision_output", "type": "CLIP_VISION_OUTPUT", "link": 6}
-      ],
-      "outputs": [{"name": "CONDITIONING", "type": "CONDITIONING", "slot_index": 0, "links": [12]}],
-      "properties": {"cnr_id": "comfy-core", "ver": "0.3.44", "Node name for S&R": "StyleModelApply"},
-      "widgets_values": [0.8, "multiply"],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 13, "type": "KSampler",
-      "pos": [600, 400], "size": [450, 315],
-      "flags": {}, "order": 12, "mode": 0,
-      "inputs": [
-        {"name": "model", "type": "MODEL", "link": 7},
-        {"name": "positive", "type": "CONDITIONING", "link": 12},
-        {"name": "negative", "type": "CONDITIONING", "link": 10},
-        {"name": "latent_image", "type": "LATENT", "link": 9}
-      ],
-      "outputs": [{"name": "LATENT", "type": "LATENT", "slot_index": 0, "links": [0]}],
-      "properties": {"cnr_id": "comfy-core", "ver": "0.3.44", "Node name for S&R": "KSampler"},
-      "widgets_values": [42, "randomize", 30, 2.5, "dpmpp_2m", "sgm_uniform", 1.0],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 14, "type": "VAEDecode",
-      "pos": [600, 750], "size": [220, 100],
-      "flags": {}, "order": 13, "mode": 0,
-      "inputs": [
-        {"name": "samples", "type": "LATENT", "link": 0},
-        {"name": "vae", "type": "VAE", "link": 11}
-      ],
-      "outputs": [{"name": "IMAGE", "type": "IMAGE", "slot_index": 0, "links": [13]}],
-      "properties": {"cnr_id": "comfy-core", "ver": "0.3.44", "Node name for S&R": "VAEDecode"},
-      "widgets_values": [],
-      "color": "#432", "bgcolor": "#653"
-    },
-    {
-      "id": 15, "type": "SaveImage",
-      "pos": [600, 920], "size": [220, 106],
-      "flags": {}, "order": 14, "mode": 0,
-      "inputs": [{"name": "images", "type": "IMAGE", "link": 13}],
+      "id": 1,
+      "type": "Note",
+      "pos": [20, -500],
+      "size": [560, 220],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
       "outputs": [],
-      "properties": {"cnr_id": "comfy-core", "ver": "0.3.44", "Node name for S&R": "SaveImage"},
-      "widgets_values": ["scene_multiview_flux_redux"],
-      "color": "#432", "bgcolor": "#653"
+      "properties": {},
+      "widgets_values": [
+        "Scene multiview generation (Flux + Redux, compatibility-safe).\\n\\nimage: single scene master reference\\nRedux extracts visual identity and material / lighting style\\nprompt: request only a slight target view shift while preserving the same scene\\n\\nThis version avoids the Flux canny control branch because some ComfyUI environments cannot load flux1-canny-dev-lora.safetensors as a valid ControlNet model."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 2,
+      "type": "DualCLIPLoader",
+      "pos": [-900, -600],
+      "size": [400, 106],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 0,
+          "links": [1, 2]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "widgets_values": [
+        "clip_l.safetensors",
+        "t5xxl_fp8_e4m3fn.safetensors",
+        "flux",
+        "default"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 3,
+      "type": "CLIPTextEncode",
+      "pos": [-900, -400],
+      "size": [520, 320],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [3]
+        }
+      ],
+      "title": "Scene Identity + Slight View Shift",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "Exact same scene as the reference image. Preserve the same road width, same bridge position, same skyline arrangement, same visible car placement logic, same streetlight layout, same steam or fog area, same rain-night mood, and the same blue-orange lighting balance. Do not redesign the city. Do not replace buildings. Do not change the road structure. Only rotate the camera slightly to a front-right 15 to 25 degree view while keeping the original composition anchors."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 4,
+      "type": "CLIPTextEncode",
+      "pos": [-900, -20],
+      "size": [520, 240],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [10]
+        }
+      ],
+      "title": "Negative Prompt",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "different city, different skyline, different building arrangement, different road structure, different bridge placement, different car arrangement, redesigned composition, new architecture, new street layout, side view too extreme, missing fog, missing reflections, text, watermark, blurry details"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 5,
+      "type": "UNETLoader",
+      "pos": [100, -600],
+      "size": [315, 106],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [7]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "flux1-dev-fp8.safetensors",
+        "default"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 6,
+      "type": "VAELoader",
+      "pos": [100, -400],
+      "size": [220, 100],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 0,
+          "links": [11]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "ae.safetensors"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 7,
+      "type": "EmptyLatentImage",
+      "pos": [100, -200],
+      "size": [220, 106],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [9]
+        }
+      ],
+      "widgets_values": [1024, 576, 1],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 8,
+      "type": "LoadImage",
+      "pos": [-900, 760],
+      "size": [274, 314],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [4]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": null
+        }
+      ],
+      "title": "Scene Master Reference",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": ["scene_front_view.png", "image"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 9,
+      "type": "CLIPVisionLoader",
+      "pos": [-900, 1160],
+      "size": [320, 82],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP_VISION",
+          "type": "CLIP_VISION",
+          "slot_index": 0,
+          "links": [5]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "CLIPVisionLoader"
+      },
+      "widgets_values": ["clip_vision_h.safetensors"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 10,
+      "type": "CLIPVisionEncode",
+      "pos": [-900, 1310],
+      "size": [320, 120],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 5
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP_VISION_OUTPUT",
+          "type": "CLIP_VISION_OUTPUT",
+          "slot_index": 0,
+          "links": [6]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "CLIPVisionEncode"
+      },
+      "widgets_values": [],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 11,
+      "type": "StyleModelLoader",
+      "pos": [-900, 1510],
+      "size": [320, 82],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STYLE_MODEL",
+          "type": "STYLE_MODEL",
+          "slot_index": 0,
+          "links": [8]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "StyleModelLoader"
+      },
+      "widgets_values": ["flux1-redux-dev.safetensors"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 12,
+      "type": "StyleModelApply",
+      "pos": [-400, 1510],
+      "size": [420, 186],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 3
+        },
+        {
+          "name": "style_model",
+          "type": "STYLE_MODEL",
+          "link": 8
+        },
+        {
+          "name": "clip_vision_output",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [12]
+        }
+      ],
+      "title": "Redux Identity Injection",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "StyleModelApply"
+      },
+      "widgets_values": [0.95, "multiply"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 13,
+      "type": "KSampler",
+      "pos": [600, 400],
+      "size": [460, 315],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 7
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 12
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 10
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [0]
+        }
+      ],
+      "title": "Main Sampler",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [42, "randomize", 36, 2.3, "dpmpp_2m", "sgm_uniform", 1.0],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 14,
+      "type": "VAEDecode",
+      "pos": [600, 760],
+      "size": [220, 100],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 0
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [13]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 15,
+      "type": "SaveImage",
+      "pos": [600, 920],
+      "size": [260, 106],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 13
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": ["scene_multiview_flux_redux"]
     }
   ],
   "links": [
