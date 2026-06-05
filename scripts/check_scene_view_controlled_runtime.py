@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import os
 import sys
+import asyncio
 from pathlib import Path
 
 COMFY_DIR = Path("/workspace/lik44@xiaopeng.com/comfyui")
@@ -28,6 +29,9 @@ def main() -> int:
 
     if EXTRA_PATHS.exists():
         extra_config.load_extra_path_config(str(EXTRA_PATHS))
+
+    # 显式加载 comfy_extras，避免只 import nodes 时误报节点未注册
+    asyncio.run(nodes.init_builtin_extra_nodes())
 
     checks = {
         "diffusion_models": "z_image_turbo_bf16.safetensors",
