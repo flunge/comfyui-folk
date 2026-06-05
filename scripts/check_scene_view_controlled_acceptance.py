@@ -23,6 +23,7 @@ CHECKS = [
     ("workflow", SCRIPT_DIR / "check_scene_view_controlled_workflow.py"),
     ("prereq", SCRIPT_DIR / "check_scene_view_controlled.py"),
     ("runtime", SCRIPT_DIR / "check_scene_view_controlled_runtime.py"),
+    ("models", SCRIPT_DIR / "check_scene_view_controlled_models.py"),
 ]
 
 
