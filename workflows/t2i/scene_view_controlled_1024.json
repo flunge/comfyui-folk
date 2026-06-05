@@ -1,6 +1,6 @@
 {
-  "last_node_id": 4,
-  "last_link_id": 1,
+  "last_node_id": 5,
+  "last_link_id": 2,
   "id": "scene-view-controlled-1024",
   "revision": 0,
   "nodes": [
@@ -8,7 +8,7 @@
       "id": 1,
       "type": "Note",
       "pos": [
-        -980,
+        -600,
         40
       ],
       "size": [
@@ -22,7 +22,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "Scene controlled-view workflow.\\n\\nUse one control image that encodes the target composition / geometry / camera structure.\\nThis workflow is designed to produce a new scene image at the target viewpoint, not to preserve the exact original pixels.\\n\\nRecommended usage:\\n- control image: canny / layout / rough target-view structure\\n- prompt: target view, weather, time, camera intent\\n- keep scene identity and landmark logic in the prompt"
+        "Scene controlled-view workflow.\\n\\n1. Load a target-view control image with the LoadImage node.\\n2. Edit the prompt in Scene View Controlled Generator.\\n3. Run to generate one new controlled scene view.\\n\\nThis workflow is for testing controllable viewpoint generation, not direct scene-master preservation."
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -31,7 +31,7 @@
       "id": 2,
       "type": "c84f7959-3738-422b-ba6e-5808b5e90101",
       "pos": [
-        -420,
+        -40,
         120
       ],
       "size": [
@@ -46,7 +46,7 @@
           "label": "control image",
           "name": "image",
           "type": "IMAGE",
-          "link": null
+          "link": 2
         },
         {
           "label": "prompt",
@@ -176,7 +176,7 @@
       "id": 3,
       "type": "SaveImage",
       "pos": [
-        120,
+        500,
         120
       ],
       "size": [
@@ -209,7 +209,7 @@
       "id": 4,
       "type": "Note",
       "pos": [
-        120,
+        500,
         280
       ],
       "size": [
@@ -227,6 +227,49 @@
       ],
       "color": "#432",
       "bgcolor": "#653"
+    },
+    {
+      "id": 5,
+      "type": "LoadImage",
+      "pos": [
+        -980,
+        180
+      ],
+      "size": [
+        274,
+        314
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.44",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "control_image.png",
+        "image"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
     }
   ],
   "links": [
@@ -235,6 +278,14 @@
       2,
       0,
       3,
+      0,
+      "_"
+    ],
+    [
+      2,
+      5,
+      0,
+      2,
       0,
       "_"
     ]
