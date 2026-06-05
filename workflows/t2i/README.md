@@ -98,6 +98,10 @@ python3 pipelines/ComfyUI/scripts/check_scene_view_controlled.py
 
 若两个检查都输出 `PASS`，再重启 ComfyUI 并测试 workflow。
 
+测试时重点确认 workflow 中标题为 `Z-Image Model Patch Loader` 的节点下拉里能看到：
+
+- `Z-Image-Turbo-Fun-Controlnet-Union.safetensors`
+
 ## 使用建议
 
 - `base` 工作流只负责定义“身份”

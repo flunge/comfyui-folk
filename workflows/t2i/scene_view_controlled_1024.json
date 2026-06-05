@@ -68,7 +68,8 @@
         "image"
       ],
       "color": "#432",
-      "bgcolor": "#653"
+      "bgcolor": "#653",
+      "title": "Target View Control Image"
     },
     {
       "id": 1,
@@ -332,7 +333,8 @@
       },
       "widgets_values": [
         "Z-Image-Turbo-Fun-Controlnet-Union.safetensors"
-      ]
+      ],
+      "title": "Z-Image Model Patch Loader"
     },
     {
       "id": 6,
@@ -704,7 +706,8 @@
         "Same exact scene identity as the provided scene master reference, but generate the target viewpoint defined by the control image. Preserve the same world, same architecture language, same landmark object placement logic, same material system, same time-of-day intent, and same atmosphere family. Do not copy the original view; follow the control image geometry."
       ],
       "color": "#232",
-      "bgcolor": "#353"
+      "bgcolor": "#353",
+      "title": "Scene Identity + View Prompt"
     },
     {
       "id": 5,
@@ -934,7 +937,8 @@
       "widgets_values": [
         0.3,
         0.4
-      ]
+      ],
+      "title": "Canny From Control Image"
     },
     {
       "id": 16,
@@ -1063,7 +1067,8 @@
         "image"
       ],
       "color": "#432",
-      "bgcolor": "#653"
+      "bgcolor": "#653",
+      "title": "Scene Master Reference"
     }
   ],
   "links": [
