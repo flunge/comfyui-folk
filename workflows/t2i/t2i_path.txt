@@ -8,6 +8,7 @@ qwen
 sd35
 t2i.txt
 text_encoders
+z_image
 
 ./flux:
 controlnet
@@ -93,6 +94,24 @@ qwen_2.5_vl_7b_fp8_scaled.safetensors
 
 ./qwen/vae:
 qwen_image_vae.safetensors
+
+./z_image:
+controlnet
+diffusion_models
+text_encoders
+vae
+
+./z_image/controlnet:
+Z-Image-Turbo-Fun-Controlnet-Union.safetensors
+
+./z_image/diffusion_models:
+z_image_turbo_bf16.safetensors
+
+./z_image/text_encoders:
+qwen_3_4b.safetensors
+
+./z_image/vae:
+ae.safetensors
 
 ./sd35:
 controlnet

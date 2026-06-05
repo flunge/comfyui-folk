@@ -60,6 +60,17 @@ TEXT_ENCODERS = [
         },
         "desc": "CLIP Vision H (FLUX Redux / 场景参考编码)",
     },
+    {
+        "repo": "Comfy-Org/z_image_turbo",
+        "files": [
+            "split_files/text_encoders/qwen_3_4b.safetensors",
+        ],
+        "local_dir": "z_image/text_encoders",
+        "rename_map": {
+            "split_files/text_encoders/qwen_3_4b.safetensors": "qwen_3_4b.safetensors",
+        },
+        "desc": "Qwen 3 4B 文本编码器 (Z-Image-Turbo)",
+    },
 ]
 
 # FLUX.1 系列 — 画质天花板，主力生图模型
@@ -99,6 +110,27 @@ FLUX_SERIES = [
         "files": None,
         "local_dir": "flux/controlnet",
         "desc": "FLUX.1-Canny ControlNet LoRA (边缘控制)",
+    },
+    {
+        "repo": "Comfy-Org/z_image_turbo",
+        "files": [
+            "split_files/diffusion_models/z_image_turbo_bf16.safetensors",
+            "split_files/vae/ae.safetensors",
+        ],
+        "local_dir": "z_image",
+        "rename_map": {
+            "split_files/diffusion_models/z_image_turbo_bf16.safetensors": "diffusion_models/z_image_turbo_bf16.safetensors",
+            "split_files/vae/ae.safetensors": "vae/ae.safetensors",
+        },
+        "desc": "Z-Image-Turbo 主模型与 VAE",
+    },
+    {
+        "repo": "PAI/Z-Image-Turbo-Fun-Controlnet-Union",
+        "files": [
+            "Z-Image-Turbo-Fun-Controlnet-Union.safetensors",
+        ],
+        "local_dir": "z_image/controlnet",
+        "desc": "Z-Image-Turbo Union ControlNet",
     },
 ]
 
@@ -227,6 +259,8 @@ MODELSCOPE_BASE = "https://www.modelscope.cn"
 HF_BASE = "https://huggingface.co"
 CHUNK_SIZE = 2 * 1024 * 1024  # 2MB
 shutdown_flag = False
+DEFAULT_MODEL_ROOT = "/workspace/group_share/adc-sim/users/lik44/models"
+DEFAULT_T2I_DIR = os.path.join(DEFAULT_MODEL_ROOT, "t2i_models")
 
 
 def signal_handler(sig, frame):
@@ -426,8 +460,8 @@ def main():
     )
     parser.add_argument("--category", choices=["base", "flux", "sd35", "kolors", "hunyuan", "cogview", "control", "all"],
                         default="all", help="下载类别 (默认: all)")
-    parser.add_argument("--dir", default="./t2i_models",
-                        help="下载根目录 (默认: ./t2i_models)")
+    parser.add_argument("--dir", default=DEFAULT_T2I_DIR,
+                        help=f"下载根目录 (默认: {DEFAULT_T2I_DIR})")
     parser.add_argument("--workers", type=int, default=8,
                         help="并发数 (默认: 8)")
     parser.add_argument("--dry-run", action="store_true",
@@ -446,7 +480,7 @@ def main():
     signal.signal(signal.SIGTERM, signal_handler)
 
     # ── 根据 category 组装下载列表 ───────────────────
-    base_dir = os.path.abspath(args.dir)
+    base_dir = os.path.abspath(os.path.expanduser(args.dir))
     all_tasks = []
 
     def add_models(models, section_name):
@@ -568,6 +602,7 @@ def main():
                 if remote_size > 0 and local_size == remote_size:
                     skipped += 1
                     downloaded_bytes += remote_size
+                    tqdm.write(f"  ⏭️ {os.path.basename(local_path)} ({remote_size / 1024 / 1024:.0f}MB)")
                     continue
 
             file_key = os.path.basename(f['path'])
