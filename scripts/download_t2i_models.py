@@ -83,7 +83,7 @@ FLUX_SERIES = [
     },
     {
         "repo": "AI-ModelScope/FLUX.1-dev",
-        "files": ["ae.sft"],
+        "files": ["ae.safetensors"],
         "local_dir": "flux/vae",
         "desc": "FLUX.1 VAE",
     },
