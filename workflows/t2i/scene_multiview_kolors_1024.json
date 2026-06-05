@@ -1,6 +1,6 @@
 {
   "last_node_id": 14,
-  "last_link_id": 14,
+  "last_link_id": 15,
   "id": "scene-multiview-sd35-depth-1024",
   "revision": 0,
   "nodes": [
@@ -219,7 +219,7 @@
         "Node name for S&R": "VAELoader"
       },
       "widgets_values": [
-        "sdxl.vae.safetensors"
+        "sd3.5_large_vae.safetensors"
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -387,7 +387,7 @@
     },
     {
       "id": 11,
-      "type": "ControlNetApply",
+      "type": "ControlNetApplyAdvanced",
       "pos": [
         -500,
         600
@@ -401,9 +401,14 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "conditioning",
+          "name": "positive",
           "type": "CONDITIONING",
           "link": 3
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 9
         },
         {
           "name": "control_net",
@@ -414,25 +419,40 @@
           "name": "image",
           "type": "IMAGE",
           "link": 5
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 15
         }
       ],
       "outputs": [
         {
-          "name": "CONDITIONING",
+          "name": "positive",
           "type": "CONDITIONING",
           "slot_index": 0,
           "links": [
             8
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "slot_index": 1,
+          "links": [
+            14
           ]
         }
       ],
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.3.44",
-        "Node name for S&R": "ControlNetApply"
+        "Node name for S&R": "ControlNetApplyAdvanced"
       },
       "widgets_values": [
-        0.85
+        0.85,
+        0.0,
+        1.0
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -617,7 +637,7 @@
       9,
       0,
       11,
-      2,
+      3,
       "IMAGE"
     ],
     [
@@ -625,7 +645,7 @@
       10,
       0,
       11,
-      1,
+      2,
       "CONTROL_NET"
     ],
     [
@@ -648,8 +668,8 @@
       9,
       4,
       0,
-      12,
-      2,
+      11,
+      1,
       "CONDITIONING"
     ],
     [
@@ -683,6 +703,22 @@
       14,
       0,
       "IMAGE"
+    ],
+    [
+      14,
+      11,
+      1,
+      12,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      15,
+      6,
+      0,
+      11,
+      4,
+      "VAE"
     ]
   ],
   "groups": [],

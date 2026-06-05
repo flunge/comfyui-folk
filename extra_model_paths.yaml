@@ -22,6 +22,7 @@ t2i_models:
       z_image/text_encoders/
     vae: |
       flux/vae/
+      sd35/vae/
       qwen/vae/
       z_image/vae/
     model_patches: |
@@ -41,3 +42,4 @@ sd35_models:
     base_path: /workspace/group_share/adc-sim/users/lik44/models/t2i_models/sd35
     diffusion_models: ./
     controlnet: controlnet/
+    vae: vae/

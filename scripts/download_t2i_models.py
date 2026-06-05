@@ -160,6 +160,15 @@ SD35_SERIES = [
         "local_dir": "sd35/controlnet",
         "desc": "SD3.5 ControlNets (Canny/Depth/Blur)",
     },
+    {
+        "repo": "AI-ModelScope/stable-diffusion-3.5-large",
+        "files": ["vae/diffusion_pytorch_model.safetensors"],
+        "local_dir": "sd35/vae",
+        "rename_map": {
+            "vae/diffusion_pytorch_model.safetensors": "sd3.5_large_vae.safetensors",
+        },
+        "desc": "SD3.5 Large VAE (16通道, ControlNet 必备)",
+    },
 ]
 
 # Kolors 系列 — 国产中文模型，ControlNet 生态最全

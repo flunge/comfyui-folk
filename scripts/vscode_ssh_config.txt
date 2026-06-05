@@ -1,0 +1,13 @@
+Host user-ssh-fuyao-b1-prod2.xiaopeng.link
+    HostName user-ssh-fuyao-b1-prod2.xiaopeng.link
+    Port 2222
+    User root
+    IdentityFile {{your_ssh_key_path}}
+
+Host fuyao_b1_prod2-adc-sim-lik44-wan
+    HostName lik44-wan.notebook.svc.cluster.local
+    Port 22
+    User root
+    ForwardAgent yes
+    ProxyJump user-ssh-fuyao-b1-prod2.xiaopeng.link
+    IdentityFile {{your_ssh_key_path}}
