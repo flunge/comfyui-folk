@@ -532,20 +532,21 @@ def main():
     for m in tqdm(all_tasks, desc="📋 扫描仓库", unit="repo"):
         repo = m['repo']
         source = m.get('source', 'ms')
+        target_files = m.get('files')
 
-        if source == 'hf':
-            files = get_model_files_hf(repo)
+        # 如果已经显式给出了文件列表，就不要再依赖仓库 API 枚举。
+        # 这样可以避开部分 ModelScope 仓库 API 404，但文件直链仍可下载的情况。
+        if target_files is not None:
+            files = [{"path": file_path, "size": 0, "lfs": True} for file_path in target_files]
         else:
-            files = get_model_files_ms(repo)
+            if source == 'hf':
+                files = get_model_files_hf(repo)
+            else:
+                files = get_model_files_ms(repo)
 
         if not files:
             skipped_repos.append(repo)
             continue
-
-        # 过滤指定文件
-        target_files = m.get('files')
-        if target_files is not None:
-            files = [f for f in files if f['path'] in target_files]
 
         for f in files:
             f['_repo'] = repo
