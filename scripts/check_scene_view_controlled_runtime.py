@@ -22,6 +22,7 @@ def main() -> int:
     os.chdir(COMFY_DIR)
     sys.path.insert(0, str(COMFY_DIR))
 
+    import nodes  # type: ignore
     import folder_paths  # type: ignore
     from utils import extra_config  # type: ignore
 
@@ -37,6 +38,19 @@ def main() -> int:
 
     print("== scene_view_controlled_1024 runtime visibility check ==")
     ok = True
+
+    required_nodes = [
+        "ModelPatchLoader",
+        "ZImageFunControlnet",
+        "QwenImageDiffsynthControlnet",
+    ]
+    for node_name in required_nodes:
+        if node_name in nodes.NODE_CLASS_MAPPINGS:
+            print(f"OK   node type registered: {node_name}")
+        else:
+            ok = False
+            print(f"MISS node type not registered: {node_name}")
+
     for category, filename in checks.items():
         visible = folder_paths.get_filename_list(category)
         if filename in visible:
