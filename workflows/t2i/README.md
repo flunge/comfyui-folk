@@ -92,12 +92,10 @@ python3 pipelines/ComfyUI/scripts/download_t2i_models.py --category flux
 在服务器上正式测试前，可先执行：
 
 ```bash
-python3 pipelines/ComfyUI/scripts/check_scene_view_controlled_workflow.py
-python3 pipelines/ComfyUI/scripts/check_scene_view_controlled.py
-python3 pipelines/ComfyUI/scripts/check_scene_view_controlled_runtime.py
+python3 pipelines/ComfyUI/scripts/check_scene_view_controlled_acceptance.py
 ```
 
-若三个检查都输出 `PASS`，再重启 ComfyUI 并测试 workflow。
+若输出 `PASS scene_view_controlled acceptance preflight is ready`，再重启 ComfyUI 并测试 workflow。
 
 测试时重点确认 workflow 中标题为 `Z-Image Model Patch Loader` 的节点下拉里能看到：
 
