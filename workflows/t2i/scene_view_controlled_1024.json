@@ -22,7 +22,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "Scene controlled-view workflow (expanded).\\n\\n1. Load a TARGET-VIEW control image in the upper LoadImage node. This should be a canny / rough layout / target composition image representing the desired 45deg or side view.\\n2. Load the original scene master image in the lower LoadImage node. This is used to preserve scene identity.\\n3. Edit the prompt in CLIPTextEncode.\\n4. Run to generate one new controlled scene view."
+        "Scene controlled-view workflow (expanded).\\n\\n1. Load a TARGET-VIEW control image in the upper LoadImage node. This should be a canny / rough layout / target composition image representing the desired 45deg or side view.\\n2. Load the original scene master image in the lower LoadImage node. This is used to preserve scene identity.\\n3. Edit the prompt in CLIPTextEncode.\\n4. Run to generate one new controlled scene view.\\n\\nOutput resolution is fixed to 1024x576."
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -761,7 +761,7 @@
     },
     {
       "id": 15,
-      "type": "ImageScaleToTotalPixels",
+      "type": "ImageScale",
       "pos": [
         390,
         920
@@ -775,44 +775,16 @@
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "image",
           "name": "image",
           "type": "IMAGE",
           "link": 2001
-        },
-        {
-          "localized_name": "upscale_method",
-          "name": "upscale_method",
-          "type": "COMBO",
-          "widget": {
-            "name": "upscale_method"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "megapixels",
-          "name": "megapixels",
-          "type": "FLOAT",
-          "widget": {
-            "name": "megapixels"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "resolution_steps",
-          "name": "resolution_steps",
-          "type": "INT",
-          "widget": {
-            "name": "resolution_steps"
-          },
-          "link": null
         }
       ],
       "outputs": [
         {
-          "localized_name": "IMAGE",
           "name": "IMAGE",
           "type": "IMAGE",
+          "slot_index": 0,
           "links": [
             27
           ]
@@ -820,76 +792,16 @@
       ],
       "properties": {
         "cnr_id": "comfy-core",
-        "ver": "0.11.0",
-        "Node name for S&R": "ImageScaleToTotalPixels"
+        "ver": "0.3.44",
+        "Node name for S&R": "ImageScale"
       },
       "widgets_values": [
-        "nearest-exact",
-        1,
-        1
-      ]
-    },
-    {
-      "id": 11,
-      "type": "GetImageSize",
-      "pos": [
-        710,
-        1150
+        "lanczos",
+        1024,
+        576,
+        "center"
       ],
-      "size": [
-        140,
-        66
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 10,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "image",
-          "name": "image",
-          "type": "IMAGE",
-          "link": 23
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "width",
-          "name": "width",
-          "type": "INT",
-          "links": [
-            12
-          ]
-        },
-        {
-          "localized_name": "height",
-          "name": "height",
-          "type": "INT",
-          "links": [
-            13
-          ]
-        },
-        {
-          "localized_name": "batch_size",
-          "name": "batch_size",
-          "type": "INT",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.76",
-        "Node name for S&R": "GetImageSize",
-        "enableTabs": false,
-        "tabWidth": 65,
-        "tabXOffset": 10,
-        "hasSecondTab": false,
-        "secondTabText": "Send Back",
-        "secondTabOffset": 80,
-        "secondTabWidth": 65
-      },
-      "widgets_values": []
+      "title": "Control Image Scale 1024x576"
     },
     {
       "id": 10,
@@ -913,7 +825,7 @@
           "widget": {
             "name": "width"
           },
-          "link": 12
+          "link": null
         },
         {
           "localized_name": "height",
@@ -922,7 +834,7 @@
           "widget": {
             "name": "height"
           },
-          "link": 13
+          "link": null
         },
         {
           "localized_name": "batch_size",
@@ -1005,12 +917,11 @@
       ],
       "outputs": [
         {
-          "localized_name": "IMAGE",
           "name": "IMAGE",
           "type": "IMAGE",
+          "slot_index": 0,
           "links": [
             22,
-            23,
             28
           ]
         }
@@ -1106,7 +1017,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "Input contract:\n- upper LoadImage = target-view control image\\n- lower LoadImage = original scene master reference\\n- CLIPTextEncode = preserve identity + describe target viewpoint / weather / time\\n\\nThis version uses ZImageFunControlnet so the model can read both control geometry and a scene reference image."
+        "Input contract:\n- upper LoadImage = target-view control image\\n- lower LoadImage = original scene master reference\\n- CLIPTextEncode = preserve identity + describe target viewpoint / weather / time\\n\\nThis version uses ZImageFunControlnet so the model can read both control geometry and a scene reference image. Output is fixed to 1024x576."
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -1245,22 +1156,6 @@
       "VAE"
     ],
     [
-      12,
-      11,
-      0,
-      10,
-      0,
-      "INT"
-    ],
-    [
-      13,
-      11,
-      1,
-      10,
-      1,
-      "INT"
-    ],
-    [
       14,
       1,
       0,
@@ -1274,14 +1169,6 @@
       0,
       9,
       3,
-      "IMAGE"
-    ],
-    [
-      23,
-      14,
-      0,
-      11,
-      0,
       "IMAGE"
     ],
     [

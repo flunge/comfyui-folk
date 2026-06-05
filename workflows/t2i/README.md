@@ -71,7 +71,6 @@ python3 pipelines/ComfyUI/scripts/download_qwen_image_models.py --model lightnin
 
 如需使用 `scene_view_controlled_1024.json`，除了基础模型外，还需要：
 
-- `clip_vision/clip_vision_h.safetensors`
 - `z_image/diffusion_models/z_image_turbo_bf16.safetensors`
 - `z_image/text_encoders/qwen_3_4b.safetensors`
 - `z_image/model_patches/Z-Image-Turbo-Fun-Controlnet-Union.safetensors`
@@ -83,15 +82,7 @@ python3 pipelines/ComfyUI/scripts/download_qwen_image_models.py --model lightnin
 python3 pipelines/ComfyUI/scripts/download_t2i_models.py --category flux
 ```
 
-该命令会从 `AI-ModelScope/FLUX.1-Redux-dev` 下载：
-
-- `image_encoder/model.safetensors`
-
-并重命名落盘为：
-
-- `clip_vision/clip_vision_h.safetensors`
-
-同时会下载 Z-Image-Turbo 所需文件到：
+该命令会下载 Z-Image-Turbo 所需文件到：
 
 - `z_image/diffusion_models/`
 - `z_image/text_encoders/`
