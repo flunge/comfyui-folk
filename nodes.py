@@ -2461,9 +2461,12 @@ async def init_builtin_extra_nodes():
 
     import_failed = []
     for node_file in extras_files:
+        time_before = time.perf_counter()
         if not await load_custom_node(os.path.join(extras_dir, node_file), module_parent="comfy_extras"):
             import_failed.append(node_file)
-
+        elapsed = time.perf_counter() - time_before
+        if elapsed > 0.5:
+            logging.info("  {:6.1f}s  comfy_extras/{}".format(elapsed, node_file))
     return import_failed
 
 
@@ -2473,9 +2476,12 @@ async def init_builtin_api_nodes():
 
     import_failed = []
     for node_file in api_nodes_files:
+        time_before = time.perf_counter()
         if not await load_custom_node(node_file, module_parent="comfy_api_nodes"):
             import_failed.append(os.path.basename(node_file))
-
+        elapsed = time.perf_counter() - time_before
+        if elapsed > 0.3:
+            logging.info("  {:6.1f}s  comfy_api_nodes/{}".format(elapsed, os.path.basename(node_file)))
     return import_failed
 
 async def init_public_apis():

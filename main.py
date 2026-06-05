@@ -473,14 +473,18 @@ def start_comfyui(asyncio_loop=None):
         comfyui_manager.start()
 
     hook_breaker_ac10a0.save_functions()
+    t0 = time.perf_counter()
     asyncio_loop.run_until_complete(nodes.init_extra_nodes(
         init_custom_nodes=(not args.disable_all_custom_nodes) or len(args.whitelist_custom_nodes) > 0,
         init_api_nodes=not args.disable_api_nodes
     ))
+    logging.info("⏱  Node initialization total: {:.1f}s".format(time.perf_counter() - t0))
     hook_breaker_ac10a0.restore_functions()
 
+    t0 = time.perf_counter()
     cuda_malloc_warning()
     setup_database()
+    logging.info("⏱  Database setup: {:.1f}s".format(time.perf_counter() - t0))
 
     prompt_server.add_routes()
     hijack_progress(prompt_server)

@@ -129,8 +129,8 @@ FLUX_SERIES = [
         "files": [
             "Z-Image-Turbo-Fun-Controlnet-Union.safetensors",
         ],
-        "local_dir": "z_image/controlnet",
-        "desc": "Z-Image-Turbo Union ControlNet",
+        "local_dir": "z_image/model_patches",
+        "desc": "Z-Image-Turbo Union Model Patch",
     },
 ]
 
@@ -421,6 +421,24 @@ def _download(url: str, local_path: str, progress_dict=None, file_key=None) -> b
         return False
 
 
+def migrate_legacy_paths(base_dir: str) -> None:
+    """兼容旧版本落盘目录，必要时自动迁移。"""
+    legacy_to_new = [
+        (
+            os.path.join(base_dir, "z_image", "controlnet", "Z-Image-Turbo-Fun-Controlnet-Union.safetensors"),
+            os.path.join(base_dir, "z_image", "model_patches", "Z-Image-Turbo-Fun-Controlnet-Union.safetensors"),
+        ),
+    ]
+    for old_path, new_path in legacy_to_new:
+        if os.path.exists(old_path) and not os.path.exists(new_path):
+            os.makedirs(os.path.dirname(new_path), exist_ok=True)
+            try:
+                os.rename(old_path, new_path)
+                print(f"  🔁 迁移旧路径: {old_path} -> {new_path}")
+            except OSError:
+                pass
+
+
 def print_model_list():
     """打印模型清单"""
     categories = {
@@ -517,6 +535,9 @@ def main():
     if not all_tasks:
         print("❌ 没有匹配的模型，请检查 --category 参数")
         return
+
+    # ── 兼容旧路径迁移 ──────────────────────────────
+    migrate_legacy_paths(base_dir)
 
     # ── 获取文件列表 ────────────────────────────────
     print("=" * 70)

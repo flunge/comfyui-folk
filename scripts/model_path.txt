@@ -422,16 +422,16 @@ qwen_2.5_vl_7b_fp8_scaled.safetensors
 qwen_image_vae.safetensors
 
 /workspace/group_share/adc-sim/users/lik44/models/t2i_models/z_image:
-controlnet
 diffusion_models
+model_patches
 text_encoders
 vae
 
-/workspace/group_share/adc-sim/users/lik44/models/t2i_models/z_image/controlnet:
-Z-Image-Turbo-Fun-Controlnet-Union.safetensors
-
 /workspace/group_share/adc-sim/users/lik44/models/t2i_models/z_image/diffusion_models:
 z_image_turbo_bf16.safetensors
+
+/workspace/group_share/adc-sim/users/lik44/models/t2i_models/z_image/model_patches:
+Z-Image-Turbo-Fun-Controlnet-Union.safetensors
 
 /workspace/group_share/adc-sim/users/lik44/models/t2i_models/z_image/text_encoders:
 qwen_3_4b.safetensors
