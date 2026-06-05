@@ -1,5 +1,5 @@
 {
-  "last_node_id": 20,
+  "last_node_id": 21,
   "last_link_id": 21,
   "id": "flux-scene-multiview-guided-1024",
   "revision": 0,
@@ -360,7 +360,7 @@
           "type": "STYLE_MODEL",
           "slot_index": 0,
           "links": [
-            7
+            14
           ]
         }
       ],
@@ -495,7 +495,7 @@
           "type": "CLIP_VISION_OUTPUT",
           "slot_index": 0,
           "links": [
-            7
+            15
           ]
         }
       ],
@@ -531,12 +531,12 @@
         {
           "name": "style_model",
           "type": "STYLE_MODEL",
-          "link": 7
+          "link": 14
         },
         {
           "name": "clip_vision_output",
           "type": "CLIP_VISION_OUTPUT",
-          "link": 7
+          "link": 15
         }
       ],
       "outputs": [
@@ -793,7 +793,7 @@
         3.5,
         "euler",
         "simple",
-        1.0
+        1
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -927,14 +927,6 @@
       "_"
     ],
     [
-      7,
-      10,
-      0,
-      14,
-      1,
-      "_"
-    ],
-    [
       8,
       5,
       0,
@@ -1028,6 +1020,22 @@
       0,
       19,
       1,
+      "_"
+    ],
+    [
+      14,
+      10,
+      0,
+      14,
+      1,
+      "_"
+    ],
+    [
+      15,
+      13,
+      0,
+      14,
+      2,
       "_"
     ]
   ],
