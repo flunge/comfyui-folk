@@ -17,6 +17,16 @@ from pathlib import Path
 
 WORKFLOW = Path("/workspace/lik44@xiaopeng.com/comfyui/workflows/t2i/scene_view_controlled_1024.json")
 REPO_ROOT = Path("/workspace/lik44@xiaopeng.com/comfyui")
+EXPECTED_WORKFLOW_ID = "scene-view-controlled-1024"
+EXPECTED_LAST_NODE_ID = 105
+EXPECTED_LAST_LINK_ID = 2003
+EXPECTED_TITLES = {
+    100: "Target View Control Image",
+    104: "Scene Master Reference",
+    12: "Scene Identity + View Prompt",
+    4: "Z-Image Model Patch Loader",
+    9: "ZImageFunControlnet",
+}
 
 
 def collect_registered_node_types() -> set[str]:
@@ -47,6 +57,12 @@ def main() -> int:
     d = json.loads(WORKFLOW.read_text(encoding="utf-8"))
     ok = True
 
+    if d.get("id") != EXPECTED_WORKFLOW_ID:
+        ok = False
+        print(f"FAIL workflow id={d.get('id')} expected {EXPECTED_WORKFLOW_ID}")
+    else:
+        print(f"OK   workflow id={EXPECTED_WORKFLOW_ID}")
+
     max_node = max(n["id"] for n in d["nodes"])
     max_link = max(l[0] for l in d["links"])
     if d["last_node_id"] != max_node:
@@ -60,6 +76,13 @@ def main() -> int:
         print(f"FAIL last_link_id={d['last_link_id']} but max link id is {max_link}")
     else:
         print(f"OK   last_link_id={max_link}")
+
+    if d["last_node_id"] != EXPECTED_LAST_NODE_ID:
+        ok = False
+        print(f"FAIL expected last_node_id={EXPECTED_LAST_NODE_ID}, got {d['last_node_id']}")
+    if d["last_link_id"] != EXPECTED_LAST_LINK_ID:
+        ok = False
+        print(f"FAIL expected last_link_id={EXPECTED_LAST_LINK_ID}, got {d['last_link_id']}")
 
     link_ids = [l[0] for l in d["links"]]
     if len(link_ids) != len(set(link_ids)):
@@ -89,6 +112,20 @@ def main() -> int:
             print(f"FAIL unknown node type: {t}")
         else:
             print(f"OK   node type: {t}")
+
+    nodes_by_id = {n["id"]: n for n in d["nodes"]}
+    for node_id, expected_title in EXPECTED_TITLES.items():
+        node = nodes_by_id.get(node_id)
+        if node is None:
+            ok = False
+            print(f"FAIL missing expected node id: {node_id}")
+            continue
+        actual_title = node.get("title", "")
+        if actual_title != expected_title:
+            ok = False
+            print(f"FAIL node {node_id} title={actual_title!r} expected {expected_title!r}")
+        else:
+            print(f"OK   node {node_id} title={expected_title}")
 
     if ok:
         print("PASS scene_view_controlled workflow structure is valid")
