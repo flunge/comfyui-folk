@@ -24,3 +24,4 @@ filtered-openapi.yaml
 uv.lock
 .comfy_environment
 nohup.out
+/assets/
